@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../styles/Dashboard.css";
+import "../Styles/Dashboard.css"
 
 const AdminProfile = () => {
   const [profile, setProfile] = useState({
