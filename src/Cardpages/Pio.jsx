@@ -1,7 +1,7 @@
 import React from "react";
 import Cpheader from "./Cpheader";
-import "../Styles/cardH.css";
-import Footer from "../components/Footer";
+import Cardh from "../Styles/Cardh.css"; 
+import Footer from "../Components/Footer";
 
 const Pio = () => {
   return (

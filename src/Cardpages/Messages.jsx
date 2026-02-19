@@ -1,6 +1,6 @@
 import React from "react";
 import Cpheader from "./Cpheader";
-import Footer from "../components/Footer";
+import Footer from "../Components/Footer"
 
 const Messages = () => {
   return (

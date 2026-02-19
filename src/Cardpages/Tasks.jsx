@@ -1,6 +1,6 @@
 import React from "react";
-import Cpheader from "./Cpheader";
-import Footer from "../components/Footer";
+import Cpheader from "../Components/Cpheader";
+import Footer from "../Components/Footer";
 
 const Tasks = () => {
   return (
