@@ -1,0 +1,65 @@
+.page {
+  font-family: Arial, sans-serif;
+  background-color: rgb(14, 20, 59);
+  min-height: 100vh;
+  color: white;
+  text-align: center;
+  padding: 40px 20px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 10px;
+}
+
+.headermain {
+  margin-bottom: 30px;
+}
+
+.text {
+  font-size: 18px;
+  color: white;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+  margin-top: 40px;
+}
+
+/* Card styles */
+.card {
+  background-color: rgb(34, 53, 148);
+  color: #cbd5e1;
+  padding: 25px;
+  border: auto;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.card-link {
+  text-decoration: none;  
+  color: inherit;
+}
+
+/* Title inside card */
+.card h3 {
+  color: #d1d5db;
+  margin-top: 12px;
+}
+
+.card:hover {
+  background-color: #1f2937;
+  color: #ffffff;
+  transform: translateY(-6px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+}
+
+.card:hover h3 {
+  color: #ffffff;
+}
+
+/* Icon spacing */
+.icon {
+  margin-bottom: 15px;
+}

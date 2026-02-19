@@ -1,0 +1,128 @@
+/* FULL BACKGROUND */
+.login-bg {
+  height: 110vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+    border: auto;
+    border-radius: 5px;
+  background: url("/internship/src/assets/login.jpg")
+    center/cover no-repeat;
+}
+
+.login-card {
+  width: 360px;
+  padding: 40px;
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  color: white;
+  text-align: center;
+}
+
+.role-switch {
+  display: flex;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.role-switch button {
+  flex: 1;
+  padding: 10px 0;
+  border: none;
+  background: transparent;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.role-switch .active {
+  background: #3b82f6;
+}
+
+.login-card input {
+  width: 100%;
+  margin-top: 15px;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+}
+
+.login-btn {
+  width: 110px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  background: #3b82f6;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.login-btn:hover {
+  background: #2563eb;
+}
+
+/* FORGOT */
+.forgot {
+    color: rgb(250, 251, 252);
+    text-decoration: none;
+  margin-bottom: 20px;
+  font-size: 20px;
+  cursor: pointer;
+}
+.forgot:hover {
+  color: #e50808;
+}
+
+.usealignright {
+  display: flex;
+  color: rgb(250, 251, 252);
+  justify-content: right;
+  text-decoration: none;
+  align-items: right;
+  gap: 20px;
+}
+
+.usealignleft {
+  display: flex;
+  color: rgb(250, 251, 252);
+  justify-content: left;
+  text-decoration: none;
+  align-items: left;
+  gap: 20px;
+}
+
+.link-row {
+  display: flex;
+  padding: auto;
+  margin-top: 10px;
+  justify-content: space-between;  /* left & right in same line */
+  align-items: center;
+  gap: 20px;
+}
+
+.link-row a {
+  color: rgb(0, 6, 11);
+  text-decoration: none;
+}
+
+.usealignleft:hover,.usealignright:hover {
+  color: #eceef0;
+}
+
+.registerbut {
+  cursor: pointer;
+}
+.registerbut:hover {
+  color: #f6f6f8;
+}
