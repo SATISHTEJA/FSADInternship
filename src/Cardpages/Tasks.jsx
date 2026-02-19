@@ -1,5 +1,5 @@
 import React from "react";
-import Cpheader from ".Cpheader";
+import Cpheader from "./Cpheader";
 import Footer from "../Components/Footer";
 
 const Tasks = () => {
