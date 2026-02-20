@@ -126,3 +126,22 @@
 .registerbut:hover {
   color: #f6f6f8;
 }
+
+/* ===== MOBILE FIX ONLY ===== */
+@media (max-width: 480px) {
+
+  .login-bg {
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  .login-card {
+    width: 95%;
+    max-width: 360px;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+
+}
