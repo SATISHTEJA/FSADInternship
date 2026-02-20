@@ -119,3 +119,29 @@
 .register:hover {
   background: rgb(14, 20, 59);
 }
+
+/* ===== MOBILE FIX FOR HOME PAGE ===== */
+@media (max-width: 768px) {
+
+  .home-container,
+  .hero,
+  .navbar {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  h1 {
+    font-size: 28px !important;
+    text-align: center;
+  }
+
+  .navbar {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+
+}
