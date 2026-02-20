@@ -109,7 +109,12 @@ const StudentProfile = () => {
 
         <button onClick={handleSave}>Save Profile</button>
       </div>
-    </div>
+      <div >
+        <a href="/student-dashboard" className="back-home">Back</a>
+       </div>
+       <div style={{textAlign: "center", margin: "20px 0"}}>
+      </div>
+      </div>
   );
 };
 

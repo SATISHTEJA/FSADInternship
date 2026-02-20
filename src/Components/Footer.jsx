@@ -14,9 +14,9 @@ const Footer = () => {
         textAlign: "center",
       }}
       >
-        <a href='https://www.instagram.com/satish_teja_vemula/' style={{textDecoration:"none", color:"white"}}>
+        <h3>
         © 2026 Remote Internship Platform.⊟BABLU
-        </a>
+        </h3>
          </footer>
   )
 }
