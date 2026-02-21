@@ -27,9 +27,7 @@ import Studentprofile from './Pages/Studentprofile'
 import Management from './Cardpages/Management'
 import Pio from './Cardpages/Pio'
 import Profileinfo from './Cardpages/Profileinfo'
-import Remote from './Cardpages/Remote'
 import Mentor from './Cardpages/Mentor'
-import Messages from './Cardpages/Messages'
 import Progress from './Cardpages/Progress'
 import Tasks from './Cardpages/Tasks'
 
@@ -68,9 +66,7 @@ const App = () => {
       <Route path="/pio" element={<Pio />} />
       <Route path="/management" element={<Management />} />
       <Route path="/profileinfo" element={<Profileinfo />} />
-      <Route path="/remote" element={<Remote />} />
       <Route path="/mentor" element={<Mentor />} />
-      <Route path="/messages" element={<Messages />} />
       <Route path="/progress" element={<Progress />} />
       <Route path="/tasks" element={<Tasks />} />
     </Routes>

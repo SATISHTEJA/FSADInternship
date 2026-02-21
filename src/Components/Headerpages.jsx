@@ -12,7 +12,6 @@ const HeaderPages = () => {
           alt="KL University"
           className="logo"
         />
-        <h2 className="leftpages">Remote Internship Management</h2>
       </div>
 
       <div className="right">

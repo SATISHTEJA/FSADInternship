@@ -4,18 +4,18 @@ const Footer = () => {
   return (
     <footer
       style={{
-        padding: "20px 50px",
-        background: "#020617",
-        color: "white",
-        fontSize: "20px",
+        width: "100%",
+        maxWidth: "100vw",      // ✅ Prevent overflow
+        padding: "20px 15px",
+        background: "White",
+        color: "Black",
+        fontSize: "16px",
         textAlign: "center",
-        borderRadius: "10px",
-        marginTop: "0px"
+        boxSizing: "border-box", // ✅ Important
+        borderRadius:"10px",
       }}
     >
-      <p style={{ margin: 0 }}>
-        © 2026 Remote Internship Platform | BABLU
-      </p>
+      © 2026 Remote Internship Platform | BABLU
     </footer>
   );
 };

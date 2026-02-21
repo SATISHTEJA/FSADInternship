@@ -1,85 +1,128 @@
-.page {
-  font-family: Arial, sans-serif;
-  background-color: rgb(14, 20, 59);
+/* ===== Wrapper ===== */
+.home-wrapper {
+  width: 100%;
+  background: #f3f4f6;
   min-height: 100vh;
-  color: white;
+}
+
+/* ===== HERO ===== */
+.hero {
   text-align: center;
-  border-radius: 10px;
-  padding: 40px 20px;
+  padding: 100px 20px 80px;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
-/* Header */
-.headermain {
-  margin-bottom: 30px;
-  border-radius: 10PX;
+.hero h1 {
+  font-size: 48px;
+  font-weight: 700;
+  color: #111827;
 }
 
-.text {
+.hero h1 span {
+  color: #2563eb;
+}
+
+.hero p {
+  margin-top: 20px;
   font-size: 18px;
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+.hero-buttons {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.primary-btn {
+  padding: 12px 24px;
+  background: #111827;
   color: white;
-}
-
-/* Grid */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 25px;
-  margin-top: 40px;
-}
-
-/* Card */
-.card {
-  background-color: rgb(34, 53, 148);
-  color: #cbd5e1;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
+  border: none;
+  border-radius: 8px;
   cursor: pointer;
 }
 
-/* Remove invalid border:auto */
-.card-link {
+.secondary-btn {
+  padding: 12px 24px;
+  background: #e5e7eb;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* ===== FEATURES ===== */
+.features {
+  padding: 60px 20px 100px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.features-grid {
+  display: grid;
+  gap: 30px;
+}
+
+/* Desktop */
+@media (min-width: 992px) {
+  .features-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Tablet */
+@media (max-width: 991px) {
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero h1 {
+    font-size: 34px;
+  }
+}
+
+/* ===== Feature Card ===== */
+.feature-card {
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+  transition: 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-6px);
+}
+
+.feature-link {
   text-decoration: none;
   color: inherit;
 }
 
-/* Title */
-.card h3 {
-  margin-top: 12px;
-  color: #ffffff;
-}
-
-/* Icon */
-.icon {
+.feature-icon {
   margin-bottom: 15px;
+  color: #2563eb;
 }
 
-.icon svg {
-  stroke: #ffffff;
-  transition: stroke 0.3s ease;
-}
-
-/* ===== HOVER EFFECT ===== */
-
-.card:hover {
-  background-color: #ffffff;
-  color: #111827;
-  transform: translateY(-6px);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-}
-
-/* Change text color properly */
-.card:hover h3 {
+.feature-card h3 {
+  margin-bottom: 10px;
+  font-size: 18px;
   color: #111827;
 }
 
-.card:hover p {
-  color: #374151;
-}
-
-/* Change icon color WHEN CARD is hovered */
-.card:hover .icon svg {
-  stroke: #111827;
-  transition: 0s;
+.feature-card p {
+  font-size: 14px;
+  color: #6b7280;
 }

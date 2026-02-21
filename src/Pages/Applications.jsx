@@ -72,14 +72,14 @@ const Applications = () => {
             Dashboard
           </button>
 
-          <button className="active">
-            <Users size={18} />
-            Applications
-          </button>
-
           <button onClick={() => navigate("/post-internship")}>
             <FileText size={18} />
             Post Internship
+          </button>
+
+          <button className="active">
+            <Users size={18} color=""/>
+            Applications
           </button>
 
           <button onClick={() => navigate("/track-progress")}>
