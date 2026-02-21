@@ -1,177 +1,251 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../Styles/Dashboard.css";
+import Headerfordash from "../Components/Headerfordash";
+import {
+  FileText,
+  Users,
+  UserCheck,
+  TrendingUp,
+  LayoutDashboard,
+  ClipboardCheck,
+  User,
+} from "lucide-react";
 
 const AdminDashboard = () => {
-  const [internships, setInternships] = useState([]);
-  const [profile, setProfile] = useState({});
-  const [form, setForm] = useState({
-    company: "",
-    role: "",
-    location: "",
-    description: "",
-  });
-
   const navigate = useNavigate();
 
-  /* 🔹 Load internships + profile */
-  useEffect(() => {
+  const [internships, setInternships] = useState([]);
+  const [applications, setApplications] = useState([]);
+
+  /* ================= LOAD DATA FUNCTION ================= */
+  const loadData = () => {
     const storedInternships =
       JSON.parse(localStorage.getItem("internships")) || [];
-    setInternships(storedInternships);
 
-    const storedProfile =
-      JSON.parse(localStorage.getItem("adminProfile")) || {};
-    setProfile(storedProfile);
+    const storedApplications =
+      JSON.parse(localStorage.getItem("applications")) || [];
+
+    setInternships(storedInternships);
+    setApplications(storedApplications);
+  };
+
+  /* ================= INITIAL + REAL TIME LISTENER ================= */
+  useEffect(() => {
+    loadData();
+
+    // Listen for custom updates
+    window.addEventListener("dataUpdated", loadData);
+
+    return () => {
+      window.removeEventListener("dataUpdated", loadData);
+    };
   }, []);
 
-  /* 🔹 Handle input change */
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  /* ================= CALCULATIONS ================= */
 
-  /* 🔹 Post internship */
-  const handlePost = () => {
-    if (!form.company || !form.role || !form.location) return;
+  const underReview = applications.filter(
+    (app) => app.status === "Under Review"
+  ).length;
 
-    const newInternship = {
-      id: Date.now(),
-      ...form,
-    };
+  const approved = applications.filter(
+    (app) => app.status === "Approved"
+  );
 
-    const updated = [newInternship, ...internships];
-
-    setInternships(updated);
-    localStorage.setItem("internships", JSON.stringify(updated));
-
-    setForm({
-      company: "",
-      role: "",
-      location: "",
-      description: "",
-    });
-  };
-
-  /* 🔹 Delete internship */
-  const handleDelete = (id) => {
-    const filtered = internships.filter((item) => item.id !== id);
-    setInternships(filtered);
-    localStorage.setItem("internships", JSON.stringify(filtered));
-  };
+  const avgCompletion = approved.length
+    ? Math.round(
+        approved.reduce((sum, app) => sum + (app.progress || 0), 0) /
+          approved.length
+      )
+    : 0;
 
   return (
-    <div className="dashboard">
+    <>
+      <Headerfordash />
 
-      {/* 🔷 HEADER */}
-      <header className="top-header">
-        <h2 className="logo">Intern Portal - Admin</h2>
+      <div className="admin-layout" style={{ paddingTop: "70px" }}>
+        {/* ================= SIDEBAR ================= */}
+        <aside className="admin-sidebar">
+          <button
+            className="active"
+            onClick={() => navigate("/admin-dashboard")}
+          >
+            <LayoutDashboard size={18} />
+            Dashboard
+          </button>
 
-        <div
-          className="profile-area"
-          onClick={() => navigate("/admin-profile")}
-        >
-          <img
-            src={profile.image}
-            alt="profile"
-            className="avatar"
-          />
-          <span className="profile-name">
-            {profile.name || "Admin"}
-          </span>
-        </div>
-      </header>
+          <button onClick={() => navigate("/post-internship")}>
+            <FileText size={18} />
+            Post Internship
+          </button>
 
-      {/* 🔷 PAGE TITLE */}
-      <div className="page-title">
-        <h1>Admin Dashboard</h1>
-        <p>Manage internship postings and evaluations</p>
-      </div>
+          <button onClick={() => navigate("/applications")}>
+            <Users size={18} />
+            Applications
+          </button>
 
-      {/* 🔷 STATS */}
-      <section className="stats-grid">
-        <div className="stat-card">
-          <h3>{internships.length}</h3>
-          <p>Total Internships</p>
-        </div>
+          <button onClick={() => navigate("/track-progress")}>
+            <TrendingUp size={18} />
+            Track Progress
+          </button>
 
-        <div className="stat-card">
-          <h3>0</h3>
-          <p>Active Interns</p>
-        </div>
+          <button onClick={() => navigate("/evaluations")}>
+            <ClipboardCheck size={18} />
+            Evaluations
+          </button>
 
-        <div className="stat-card">
-          <h3>0</h3>
-          <p>Pending Evaluations</p>
-        </div>
-      </section>
+          <button onClick={() => navigate("/admin-profile")}>
+            <User size={18} />
+            Profile
+          </button>
+        </aside>
 
-      {/* 🔷 POST FORM */}
-      <section className="form-card">
-        <h2>Post New Internship</h2>
+        {/* ================= MAIN ================= */}
+        <main className="admin-main">
+          <div className="page-header">
+            <h1>Dashboard</h1>
+            <p>
+              Welcome back! Here's an overview of your internship programs.
+            </p>
+          </div>
 
-        <input
-          name="company"
-          placeholder="Company Name"
-          value={form.company}
-          onChange={handleChange}
-        />
-
-        <input
-          name="role"
-          placeholder="Internship Role"
-          value={form.role}
-          onChange={handleChange}
-        />
-
-        <input
-          name="location"
-          placeholder="Location"
-          value={form.location}
-          onChange={handleChange}
-        />
-
-        <textarea
-          name="description"
-          placeholder="Internship Description"
-          value={form.description}
-          onChange={handleChange}
-        />
-
-        <button onClick={handlePost}>Post Internship</button>
-      </section>
-
-      {/* 🔷 INTERNSHIP CARDS */}
-      <section className="cards-grid">
-        {internships.length === 0 ? (
-          <p className="no-data">No internships posted yet.</p>
-        ) : (
-          internships.map((item) => (
-            <div key={item.id} className="internship-card">
-
-              <div className="card-header">
-                <h3>{item.company}</h3>
-
-                <button
-                  className="delete-btn"
-                  onClick={() => handleDelete(item.id)}
-                >
-                  ✕
-                </button>
+          {/* ================= STATS ================= */}
+          <section className="stats-grid">
+            <div className="stat-card">
+              <div className="stat-left">
+                <p>Active Internships</p>
+                <h3>{internships.length}</h3>
               </div>
-
-              <p className="role">{item.role}</p>
-              <p className="location">{item.location}</p>
-              <p className="desc">{item.description}</p>
+              <FileText className="stat-icon blue" size={32} />
             </div>
-          ))
-        )}
-      </section>
-      <div >
-        <a href="/login" className="back-home">Logout</a>
-       </div>
-       <div style={{textAlign: "center", margin: "20px 0"}}>
+
+            <div className="stat-card">
+              <div className="stat-left">
+                <p>Pending Applications</p>
+                <h3>{underReview}</h3>
+              </div>
+              <Users className="stat-icon orange" size={32} />
+            </div>
+
+            <div className="stat-card">
+              <div className="stat-left">
+                <p>Active Interns</p>
+                <h3>{approved.length}</h3>
+              </div>
+              <UserCheck className="stat-icon green" size={32} />
+            </div>
+
+            <div className="stat-card">
+              <div className="stat-left">
+                <p>Avg Completion</p>
+                <h3>{avgCompletion}%</h3>
+              </div>
+              <TrendingUp className="stat-icon purple" size={32} />
+            </div>
+          </section>
+
+          {/* ================= QUICK ACTIONS ================= */}
+          <section className="dashboard-card">
+  <h2>Quick Actions</h2>
+
+  <div className="quick-actions-grid">
+
+    <button
+      className="quick-action primary"
+      onClick={() => navigate("/post-internship")}
+    >
+      <FileText size={18} />
+      Post New Internship
+    </button>
+
+    <button
+      className="quick-action secondary"
+      onClick={() => navigate("/applications")}
+    >
+      <Users size={18} />
+      Review Applications
+    </button>
+
+    <button
+      className="quick-action secondary"
+      onClick={() => navigate("/evaluations")}
+    >
+      <ClipboardCheck size={18} />
+      Create Evaluation
+    </button>
+
+  </div>
+</section>
+
+          {/* ================= RECENT APPLICATIONS ================= */}
+          <section className="dashboard-card">
+            <h2>Recent Applications</h2>
+
+            {applications.length === 0 ? (
+              <p style={{ color: "#6b7280" }}>
+                No applications found.
+              </p>
+            ) : (
+              applications.slice(0, 3).map((app) => (
+                <div key={app.id} className="recent-card">
+                  <div>
+                    <h4>{app.studentName}</h4>
+                    <p>{app.internshipTitle}</p>
+                    <small>Applied: {app.appliedDate}</small>
+                  </div>
+
+                  <span
+                    className={`status-badge ${app.status.replace(
+                      " ",
+                      "-"
+                    )}`}
+                  >
+                    {app.status}
+                  </span>
+                </div>
+              ))
+            )}
+
+            <div
+              className="view-all-link"
+              onClick={() => navigate("/applications")}
+              style={{ cursor: "pointer", marginTop: "10px" }}
+            >
+              View All Applications →
+            </div>
+          </section>
+
+          {/* ================= INTERN PROGRESS ================= */}
+          <section className="dashboard-card">
+            <h2>Intern Progress Overview</h2>
+
+            {approved.length === 0 ? (
+              <p style={{ color: "#6b7280" }}>
+                No approved interns yet.
+              </p>
+            ) : (
+              approved.slice(0, 3).map((intern) => (
+                <div key={intern.id} className="progress-card">
+                  <div className="progress-header">
+                    <h4>{intern.studentName}</h4>
+                    <span>{intern.progress || 0}%</span>
+                  </div>
+
+                  <div className="progress-bar">
+                    <div
+                      className="progress-fill"
+                      style={{
+                        width: `${intern.progress || 0}%`,
+                      }}
+                    ></div>
+                  </div>
+                </div>
+              ))
+            )}
+          </section>
+        </main>
       </div>
-    </div>
+    </>
   );
 };
 

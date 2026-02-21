@@ -1,0 +1,71 @@
+.dash-header {
+  height: 64px;
+  color: white;
+  display: flex;
+  border: auto;
+  border-bottom: "1px";
+  border-radius: 10px;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 24px;
+}
+
+/* LEFT */
+.dash-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dash-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #03020b;
+}
+
+.logo-box {
+  width: 26px;
+  height: 26px;
+  background: linear-gradient(135deg, #2563eb, #60a5fa);
+  border-radius: 4px;
+}
+
+.dash-left h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* RIGHT */
+.dash-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+}
+
+.company {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.email {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.logout-btn {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+.logout-btn:hover {
+  color: #ef4444;
+}

@@ -4,14 +4,14 @@
   min-height: 100vh;
   color: white;
   text-align: center;
-  padding: 40px 20px;
-  margin-top: 10px;
-  border: none;
   border-radius: 10px;
+  padding: 40px 20px;
 }
 
+/* Header */
 .headermain {
   margin-bottom: 30px;
+  border-radius: 10PX;
 }
 
 .text {
@@ -19,6 +19,7 @@
   color: white;
 }
 
+/* Grid */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -26,40 +27,59 @@
   margin-top: 40px;
 }
 
-/* Card styles */
+/* Card */
 .card {
   background-color: rgb(34, 53, 148);
   color: #cbd5e1;
   padding: 25px;
-  border: auto;
   border-radius: 12px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease;
   cursor: pointer;
 }
+
+/* Remove invalid border:auto */
 .card-link {
-  text-decoration: none;  
+  text-decoration: none;
   color: inherit;
 }
 
-/* Title inside card */
+/* Title */
 .card h3 {
-  color: #d1d5db;
   margin-top: 12px;
+  color: #ffffff;
 }
 
+/* Icon */
+.icon {
+  margin-bottom: 15px;
+}
+
+.icon svg {
+  stroke: #ffffff;
+  transition: stroke 0.3s ease;
+}
+
+/* ===== HOVER EFFECT ===== */
+
 .card:hover {
-  background-color: #1f2937;
-  color: #ffffff;
+  background-color: #ffffff;
+  color: #111827;
   transform: translateY(-6px);
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
 }
 
+/* Change text color properly */
 .card:hover h3 {
-  color: #ffffff;
+  color: #111827;
 }
 
-/* Icon spacing */
-.icon {
-  margin-bottom: 15px;
+.card:hover p {
+  color: #374151;
+}
+
+/* Change icon color WHEN CARD is hovered */
+.card:hover .icon svg {
+  stroke: #111827;
+  transition: 0s;
 }

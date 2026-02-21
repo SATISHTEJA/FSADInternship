@@ -13,7 +13,6 @@ const HeaderMain = () => {
           alt="KL University"
           className="logo"
         />
-        <h2 className="title">Remote Internship Management</h2>
       </div>
 
       <div className="right">

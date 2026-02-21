@@ -1,147 +1,181 @@
-.header {
-  height: 64px;
-  color: white;
-  display: flex;
-  border: auto;
-  border-bottom: "1px";
-  border-radius: 10px;
-  align-items: center;
-  justify-content: space-between;
+/* ========================= */
+/* ===== PUBLIC HEADER ===== */
+/* ========================= */
 
-  padding: 0 24px;
-}
 .headerpages {
   height: 64px;
-  background: #00070e;
-  color: rgb(246, 246, 246);
-  border: auto;
-  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 24px;
+  background: #00070e;
+  color: #f6f6f6;
 }
 
 .leftpages {
   display: flex;
-  color: rgb(246, 246, 246);
-  border: auto;
   align-items: center;
   gap: 30px;
 }
 
+.page {
+  font-family: Arial, sans-serif;
+  background-color: rgb(236, 237, 244);
+  min-height: 100vh;
+  color: rgb(8, 0, 0);
+  text-align: center;
+  padding: 40px 20px;
+  width: 1481px;
+  overflow-x: hidden;
+}
+
 .home {
   color: #f6f8f9;
-  border: none;
-  padding: 8px 12px;
   text-decoration: none;
   font-size: 20px;
-  cursor: pointer;
+  padding: 8px 12px;
 }
 
 .home:hover {
-  background:#f3f4f5;
-  border: none;
-  font-size: 20px;
-  border-radius:8px ;
-  padding: 4px 10px;
-  color: #000206;
-}
-
-.title {
-  color: black;
-  font-size: 30px;
-  font-weight: 500;
-}
-
-.left {
-  display: flex;
-  align-items: left;
-  gap: 30px;
-}
-
-.logo {
-  height: 60px;
-  border: circle;
+  background: #f3f4f5;
   border-radius: 8px;
-}
-
-.menu {
-  display: flex;
-  gap: 24px;
-}
-
-.menu a {
-  color: #cbd5e1;
-  text-decoration: none;
-  font-size: 15px;
-}
-
-.menu a:hover {
-  color: white;
+  color: #000206;
 }
 
 .right {
   display: flex;
   align-items: center;
-  text-decoration: none;
   gap: 18px;
 }
 
 .login {
   color: #00070e;
-  border: none;
-  padding: 8px 12px;
   text-decoration: none;
   font-size: 20px;
-  cursor: pointer;
+  padding: 8px 12px;
 }
 
 .login:hover {
-  background:#00060c;
-  border: none;
-  border-radius:8px ;
-  padding: 4px 10px;
+  background: #00060c;
+  border-radius: 8px;
   color: #f0f1f3;
 }
 
 .register {
   background: #5a75a0;
-  border: none;
-  font-size: 15px;
-  text-decoration: none;
   color: white;
+  font-size: 15px;
   padding: 8px 16px;
   border-radius: 8px;
-  cursor: pointer;
+  text-decoration: none;
 }
 
 .register:hover {
   background: rgb(14, 20, 59);
 }
 
-/* ===== MOBILE FIX FOR HOME PAGE ===== */
-@media (max-width: 768px) {
 
-  .home-container,
-  .hero,
-  .navbar {
-    flex-direction: column;
-    align-items: center;
-  }
+/* ========================= */
+/* ===== DASH HEADER ======= */
+/* ========================= */
 
-  h1 {
-    font-size: 28px !important;
-    text-align: center;
-  }
+.dash-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  z-index: 1000;
+}
 
-  .navbar {
-    width: 100%;
-    flex-wrap: wrap;
-  }
+.dash-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 
-  body {
-    overflow-x: hidden;
-  }
+.dash-left h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
 
+.dash-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.logout-btn {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+
+/* ========================= */
+/* ===== ADMIN LAYOUT ====== */
+/* ========================= */
+
+.admin-layout {
+  display: flex;
+  min-height: calc(100vh - 70px);
+}
+
+.admin-sidebar {
+  width: 240px;
+  background: #ffffff;
+  border-right: 1px solid #e5e7eb;
+  padding: 20px;
+}
+
+.admin-main {
+  flex: 1;
+  padding: 40px 60px;
+  background: #f5f7fb;
+}
+
+
+/* ========================= */
+/* ===== FORM CARD ========= */
+/* ========================= */
+
+.form-card {
+  width: 100%;
+  max-width: 1200px;
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.form-card input,
+.form-card textarea,
+.form-card select {
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 18px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  font-size: 14px;
+}
+
+.form-card button {
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.form-card button:first-of-type {
+  background: #0f172a;
+  color: white;
 }

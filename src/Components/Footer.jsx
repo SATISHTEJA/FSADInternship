@@ -1,24 +1,23 @@
-import React from 'react'
+import React from "react";
 
 const Footer = () => {
   return (
     <footer
-    style={{
-        padding: "20px",
+      style={{
+        padding: "20px 50px",
         background: "#020617",
         color: "white",
-        border: "none",
         fontSize: "20px",
-        borderRadius: "10px",
-        marginTop: "1px",
         textAlign: "center",
+        borderRadius: "10px",
+        marginTop: "0px"
       }}
-      >
-        <h3>
-        © 2026 Remote Internship Platform.⊟BABLU
-        </h3>
-         </footer>
-  )
-}
+    >
+      <p style={{ margin: 0 }}>
+        © 2026 Remote Internship Platform | BABLU
+      </p>
+    </footer>
+  );
+};
 
-export default Footer
+export default Footer;

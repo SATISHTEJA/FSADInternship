@@ -1,27 +1,39 @@
 import React, { useState, useEffect } from "react";
-import "../Styles/Dashboard.css"
+import { useNavigate } from "react-router-dom";
+import HeaderforStudent from "../Components/HeaderforStudent";
+import "../Styles/Dashboard.css";
+import {
+  LayoutDashboard,
+  Search,
+  FileText,ClipboardList,
+  CheckSquare,
+  MessageSquare,
+  User
+} from "lucide-react";
 
 const StudentProfile = () => {
+  const navigate = useNavigate();
+
   const [profile, setProfile] = useState({
     name: "",
     email: "",
-    course: "",
+    university: "",
     image: "",
   });
 
-  /* 🔹 Load profile from localStorage */
+  /* ================= LOAD PROFILE ================= */
   useEffect(() => {
     const savedProfile =
       JSON.parse(localStorage.getItem("studentProfile")) || {};
     setProfile(savedProfile);
   }, []);
 
-  /* 🔹 Handle text change */
+  /* ================= HANDLE INPUT ================= */
   const handleChange = (e) => {
     setProfile({ ...profile, [e.target.name]: e.target.value });
   };
 
-  /* 🔹 Handle image upload */
+  /* ================= IMAGE UPLOAD ================= */
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -33,88 +45,142 @@ const StudentProfile = () => {
     reader.readAsDataURL(file);
   };
 
-  /* 🔹 Delete profile photo */
   const handleDeletePhoto = () => {
     setProfile({ ...profile, image: "" });
   };
 
-  /* 🔹 Save profile */
+  /* ================= SAVE ================= */
   const handleSave = () => {
     localStorage.setItem("studentProfile", JSON.stringify(profile));
     alert("Profile saved successfully!");
   };
 
   return (
-    <div className="dashboard">
-      <h1>Student Profile</h1>
+    <>
+      <HeaderforStudent />
 
-      <div className="form-card">
-        {/* Profile Image */}
-        <div style={{ textAlign: "center", marginBottom: "15px" }}>
-          <img
-            src={profile.image}
-            alt="profile"
-            style={{
-              width: 90,
-              height: 90,
-              borderRadius: "50%",
-              objectFit: "cover",
-              marginBottom: "10px",
-            }}
-          />
+      <div className="admin-layout" style={{ paddingTop: "70px" }}>
 
-          <div style={{ display: "flex", gap: "10px", justifyContent: "center" }}>
-            <input type="file" onChange={handleImageUpload} />
+        {/* ===== SIDEBAR ===== */}
+        <aside className="admin-sidebar">
 
-            {profile.image && (
-              <button
-                type="button"
-                onClick={handleDeletePhoto}
+          <button onClick={() => navigate("/student-dashboard")}>
+            <LayoutDashboard size={18} />
+            Dashboard
+          </button>
+
+          <button onClick={() => navigate("/browse-internships")}>
+            <Search size={18} />
+            Browse Internships
+          </button>
+
+          <button onClick={() => navigate("/my-applications")}>
+            <FileText size={18} />
+            My Applications
+          </button>
+
+          <button onClick={() => navigate("/mytasks")}>
+            <ClipboardList size={18} />
+            My Tasks
+          </button>
+
+          <button onClick={() => navigate("/feedback")}>
+            <MessageSquare size={18} />
+            Feedback
+          </button>
+
+          <button className="active">
+            <User size={18} />
+            Profile
+          </button>
+
+        </aside>
+
+        {/* ===== MAIN ===== */}
+        <main className="admin-main">
+
+          <div className="page-header">
+            <h1>Student Profile</h1>
+            <p>Manage your profile information.</p>
+          </div>
+
+          <div className="form-card" style={{ maxWidth: "700px" }}>
+
+            {/* ===== PROFILE IMAGE ===== */}
+            <div style={{ textAlign: "center", marginBottom: "20px" }}>
+              <img
+                src={
+                  profile.image ||
+                  "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                }
+                alt="profile"
                 style={{
-                  background: "#ef4444",
-                  color: "white",
-                  border: "none",
-                  padding: "6px 10px",
-                  borderRadius: "6px",
-                  cursor: "pointer",
+                  width: "100px",
+                  height: "100px",
+                  borderRadius: "50%",
+                  objectFit: "cover",
+                  marginBottom: "10px",
+                }}
+              />
+
+              <div
+                style={{
+                  display: "flex",
+                  gap: "10px",
+                  justifyContent: "center",
                 }}
               >
-                Delete Photo
-              </button>
-            )}
+                <input type="file" onChange={handleImageUpload} />
+
+                {profile.image && (
+                  <button
+                    onClick={handleDeletePhoto}
+                    style={{
+                      background: "#ef4444",
+                      color: "white",
+                      border: "none",
+                      padding: "6px 12px",
+                      borderRadius: "6px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Delete Photo
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* ===== FORM FIELDS ===== */}
+            <input
+              name="name"
+              placeholder="Full Name"
+              value={profile.name || ""}
+              onChange={handleChange}
+            />
+
+            <input
+              name="email"
+              placeholder="Email"
+              value={profile.email || ""}
+              onChange={handleChange}
+            />
+
+            <input
+              name="university"
+              placeholder="University / College"
+              value={profile.university || ""}
+              onChange={handleChange}
+            />
+
+            <button onClick={handleSave}>
+              Save Profile
+            </button>
+
           </div>
-        </div>
 
-        {/* Form Fields */}
-        <input
-          name="name"
-          placeholder="Full Name"
-          value={profile.name}
-          onChange={handleChange}
-        />
-
-        <input
-          name="email"
-          placeholder="Email"
-          value={profile.email}
-          onChange={handleChange}
-        />
-
-        <input
-          name="course"
-          placeholder="Course"
-          value={profile.course}
-          onChange={handleChange}
-        />
-
-        <button onClick={handleSave}>Save Profile</button>
+        </main>
       </div>
-      <div >
-        <a href="/student-dashboard" className="back-home">Back</a>
-       </div>
-       <div style={{textAlign: "center", margin: "20px 0"}}>
-      </div>
-      </div>
+    </>
   );
 };
 

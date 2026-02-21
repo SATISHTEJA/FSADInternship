@@ -1,135 +1,237 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../Styles/Dashboard.css"
+import HeaderforStudent from "../Components/HeaderforStudent";
+import {
+  LayoutDashboard,
+  Search,
+  FileText,
+  ClipboardList,
+  MessageSquare,
+  User,
+  Clock,
+  TrendingUp,
+  CheckCircle,
+  ListTodo,
+} from "lucide-react";
 
 const StudentDashboard = () => {
-  const [companiesData, setCompaniesData] = useState([]);
-  const [search, setSearch] = useState("");
-  const [applied, setApplied] = useState([]);
-  const [profile, setProfile] = useState({});
   const navigate = useNavigate();
 
-  /* 🔹 Load data from localStorage */
-  useEffect(() => {
-    const storedInternships =
-      JSON.parse(localStorage.getItem("internships")) || [];
-    setCompaniesData(storedInternships);
+  const [student, setStudent] = useState({});
+  const [approvedInternship, setApprovedInternship] = useState(null);
+  const [tasks, setTasks] = useState([]);
 
-    const storedApplied =
-      JSON.parse(localStorage.getItem("appliedInternships")) || [];
-    setApplied(storedApplied);
-
-    const storedProfile =
+  /* ================= LOAD DATA ================= */
+  const loadDashboardData = () => {
+    const loggedStudent =
       JSON.parse(localStorage.getItem("studentProfile")) || {};
-    setProfile(storedProfile);
-  }, []);
+    setStudent(loggedStudent);
 
-  /* 🔹 Filter internships by search */
-  const filteredCompanies = companiesData.filter((company) =>
-    company.company.toLowerCase().includes(search.toLowerCase())
-  );
+    const applications =
+      JSON.parse(localStorage.getItem("applications")) || [];
 
-  /* 🔹 Apply handler */
-  const handleApply = (id) => {
-    if (!applied.includes(id)) {
-      const updatedApplied = [...applied, id];
-      setApplied(updatedApplied);
-      localStorage.setItem(
-        "appliedInternships",
-        JSON.stringify(updatedApplied)
-      );
-    }
+    const approved = applications.find(
+      (app) =>
+        app.email === loggedStudent.email &&
+        app.status === "Approved"
+    );
+
+    setApprovedInternship(approved || null);
+
+    const storedTasks =
+      JSON.parse(localStorage.getItem("tasks")) || [];
+
+    // Flexible match (prevents property mismatch issue)
+    const myTasks = storedTasks.filter(
+      (task) =>
+        task.assignedTo === loggedStudent.email ||
+        task.studentEmail === loggedStudent.email ||
+        task.email === loggedStudent.email
+    );
+
+    setTasks(myTasks);
   };
 
+  useEffect(() => {
+    loadDashboardData();
+
+    window.addEventListener("focus", loadDashboardData);
+
+    return () => {
+      window.removeEventListener("focus", loadDashboardData);
+    };
+  }, []);
+
+  /* ================= TASK CALCULATIONS ================= */
+
+  const completed = tasks.filter(
+  (t) =>
+    t.status?.toLowerCase() === "completed" ||
+    t.status?.toLowerCase() === "submitted"
+).length;
+
+const inProgress = tasks.filter(
+  (t) => t.status?.toLowerCase() === "in progress"
+).length;
+
+const pending = tasks.filter(
+  (t) => t.status?.toLowerCase() === "pending"
+).length;
+
+  const totalTasks = tasks.length;
+
+  const progress =
+    totalTasks === 0
+      ? 0
+      : Math.round((completed / totalTasks) * 100);
+
   return (
-    <div className="dashboard">
-      {/* 🔷 HEADER */}
-      <header className="top-header">
-        {/* Logo */}
-        <h2 className="logo">Intern Portal</h2>
+    <>
+      <HeaderforStudent />
 
-        {/* Search */}
-        <input
-          type="text"
-          placeholder="Search internships..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="header-search"
-        />
+      <div className="admin-layout" style={{ paddingTop: "70px" }}>
+        {/* ================= SIDEBAR ================= */}
+        <aside className="admin-sidebar">
+          <button
+            className="active"
+            onClick={() => navigate("/student-dashboard")}
+          >
+            <LayoutDashboard size={18} />
+            Dashboard
+          </button>
 
-        {/* Profile */}
-        <div
-          className="profile-area"
-          onClick={() => navigate("/student-profile")}
-        >
-          <img
-            src={profile.image}
-            alt="profile"
-            className="avatar"
-          />
-          <span className="profile-name">
-            {profile.name || "Student"}
-          </span>
-        </div>
-      </header>
+          <button onClick={() => navigate("/browse-internships")}>
+            <Search size={18} />
+            Browse Internships
+          </button>
 
-      {/* 🔷 PAGE TITLE */}
-      <div className="page-title">
-        <h1>Student Dashboard</h1>
-        <p>Browse internships and track your applications</p>
-      </div>
+          <button onClick={() => navigate("/myapplications")}>
+            <FileText size={18} />
+            My Applications
+          </button>
 
-      {/* 🔷 STATS */}
-      <section className="stats-grid">
-        <div className="stat-card">
-          <h3>{companiesData.length}</h3>
-          <p>Total Opportunities</p>
-        </div>
+          <button onClick={() => navigate("/mytasks")}>
+            <ClipboardList size={18} />
+            My Tasks
+          </button>
 
-        <div className="stat-card">
-          <h3>{applied.length}</h3>
-          <p>Applied Internships</p>
-        </div>
+          <button onClick={() => navigate("/feedback")}>
+            <MessageSquare size={18} />
+            Feedback
+          </button>
 
-        <div className="stat-card">
-          <h3>0%</h3>
-          <p>Progress</p>
-        </div>
-      </section>
+          <button onClick={() => navigate("/student-profile")}>
+            <User size={18} />
+            Profile
+          </button>
+        </aside>
 
-      {/* 🔷 INTERNSHIP CARDS */}
-      <section className="cards-grid">
-        {filteredCompanies.length === 0 ? (
-          <p className="no-data">No internships found.</p>
-        ) : (
-          filteredCompanies.map((company) => (
-            <div key={company.id} className="internship-card">
-              <h3>{company.company}</h3>
-              <p className="role">{company.role}</p>
-              <p className="location">{company.location}</p>
-              <p className="desc">{company.description}</p>
+        {/* ================= MAIN ================= */}
+        <main className="admin-main">
+          <div className="page-header">
+            <h1>
+              Welcome Back, {student.name || "Student"}!
+            </h1>
+            <p>Here's an overview of your internship progress.</p>
+          </div>
 
-              <button
-                onClick={() => handleApply(company.id)}
-                disabled={applied.includes(company.id)}
-                className={`apply-btn ${
-                  applied.includes(company.id) ? "applied" : ""
-                }`}
+          {/* ================= CURRENT INTERNSHIP ================= */}
+          {approvedInternship && (
+            <section className="dashboard-card">
+              <h2>Current Internship</h2>
+              <h3>{approvedInternship.internshipTitle}</h3>
+              <p>{approvedInternship.company}</p>
+
+              <div
+                style={{
+                  display: "flex",
+                  gap: "40px",
+                  marginTop: "15px",
+                }}
               >
-                {applied.includes(company.id)
-                  ? "Applied ✓"
-                  : "Apply Now"}
-              </button>
+                <div>
+                  <strong>Start Date</strong>
+                  <p>{approvedInternship.appliedDate || "N/A"}</p>
+                </div>
+
+                <div>
+                  <strong>Duration</strong>
+                  <p>{approvedInternship.duration || "N/A"}</p>
+                </div>
+
+                <div>
+                  <strong>Stipend</strong>
+                  <p>{approvedInternship.stipend || "N/A"}</p>
+                </div>
+              </div>
+            </section>
+          )}
+
+          {/* ================= STATS ================= */}
+          <section className="stats-grid">
+            <div className="stat-card">
+              <div className="stat-left">
+                <p>Overall Progress</p>
+                <h3>{progress}%</h3>
+              </div>
+              <TrendingUp className="stat-icon blue" size={28} />
             </div>
-          ))
-        )}
-      </section>
-      <div >
-        <a href="/login" className="back-home">Logout</a>
-       </div>
-       <div style={{textAlign: "center", margin: "20px 0"}}>
+
+            <div className="stat-card">
+              <div className="stat-left">
+                <p>Tasks Completed</p>
+                <h3>{completed}</h3>
+              </div>
+              <CheckCircle className="stat-icon green" size={28} />
+            </div>
+
+            <div className="stat-card">
+              <div className="stat-left">
+                <p>In Progress</p>
+                <h3>{inProgress}</h3>
+              </div>
+              <Clock className="stat-icon orange" size={28} />
+            </div>
+
+            <div className="stat-card">
+              <div className="stat-left">
+                <p>Pending Tasks</p>
+                <h3>{pending}</h3>
+              </div>
+              <ListTodo className="stat-icon purple" size={28} />
+            </div>
+          </section>
+
+          {/* ================= PROGRESS BAR ================= */}
+          <section className="dashboard-card">
+            <h2>Progress Overview</h2>
+
+            <div style={{ marginTop: "15px" }}>
+              <div
+                style={{
+                  height: "10px",
+                  background: "#e5e7eb",
+                  borderRadius: "10px",
+                }}
+              >
+                <div
+                  style={{
+                    width: `${progress}%`,
+                    height: "100%",
+                    background: "#0f172a",
+                    borderRadius: "10px",
+                  }}
+                />
+              </div>
+
+              <p style={{ marginTop: "10px" }}>
+                {completed} of {totalTasks} tasks completed
+              </p>
+            </div>
+          </section>
+        </main>
       </div>
-    </div>
+    </>
   );
 };
 

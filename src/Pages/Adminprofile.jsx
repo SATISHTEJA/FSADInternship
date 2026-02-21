@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
-import "../Styles/Dashboard.css"
+import { useNavigate } from "react-router-dom";
+import Headerfordash from "../Components/Headerfordash";
+import "../Styles/Dashboard.css";
+import {FileText,User,Users,UserCheck,TrendingUp,LayoutDashboard,ClipboardCheck} from "lucide-react";
 
 const AdminProfile = () => {
+  const navigate = useNavigate();
+
   const [profile, setProfile] = useState({
     name: "",
     email: "",
@@ -9,19 +14,17 @@ const AdminProfile = () => {
     image: "",
   });
 
-  /* 🔹 Load profile from localStorage */
+  // Load saved profile
   useEffect(() => {
     const savedProfile =
       JSON.parse(localStorage.getItem("adminProfile")) || {};
     setProfile(savedProfile);
   }, []);
 
-  /* 🔹 Handle text change */
   const handleChange = (e) => {
     setProfile({ ...profile, [e.target.name]: e.target.value });
   };
 
-  /* 🔹 Handle image upload */
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -33,90 +36,137 @@ const AdminProfile = () => {
     reader.readAsDataURL(file);
   };
 
-  /* 🔹 Delete profile photo */
   const handleDeletePhoto = () => {
     setProfile({ ...profile, image: "" });
   };
 
-  /* 🔹 Save profile */
   const handleSave = () => {
     localStorage.setItem("adminProfile", JSON.stringify(profile));
-    alert("Admin profile saved successfully!");
+    alert("Profile saved successfully!");
   };
 
   return (
-    <div className="dashboard">
-      <h1>Admin Profile</h1>
+    <>
+      {/* 🔵 TOP HEADER */}
+      <Headerfordash />
 
-      <div className="form-card">
-        {/* Profile Image */}
-        <div style={{ textAlign: "center", marginBottom: "15px" }}>
-          <img
-            src={profile.image}
-            alt="profile"
-            style={{
-              width: 90,
-              height: 90,
-              borderRadius: "50%",
-              objectFit: "cover",
-              marginBottom: "10px",
-            }}
-          />
-
-          <div
-            style={{ display: "flex", gap: "10px", justifyContent: "center" }}
+      <div className="admin-layout" style={{ paddingTop: "70px" }}>
+        
+        {/* 🔵 SIDEBAR */}
+        <aside className="admin-sidebar">
+        
+          <button  onClick={() => navigate("/admin-dashboard")}>
+            <LayoutDashboard size={18} />
+            Dashboard
+          </button>
+        
+          <button onClick={() => navigate("/post-internship")}>
+            <FileText size={18} />
+            Post Internship
+          </button>
+        
+          <button
+            onClick={() => navigate("/applications")}
           >
-            <input type="file" onChange={handleImageUpload} />
+            <Users size={18} />
+            Applications
+          </button>
+        
+          <button onClick={() => navigate("/track-progress")}>
+            <TrendingUp size={18} />
+            Track Progress
+          </button>
+        
+          <button onClick={() => navigate("/evaluations")}>
+            <ClipboardCheck size={18} />
+            Evaluations
+          </button>
+        
+          <button className="active" onClick={() => navigate("/admin-profile")}>
+            <User size={18} />
+            Profile
+          </button>
+        
+        </aside>
+        {/* 🔵 MAIN CONTENT */}
+        <main className="admin-main">
 
-            {profile.image && (
-              <button
-                type="button"
-                onClick={handleDeletePhoto}
-                style={{
-                  background: "#ef4444",
-                  color: "white",
-                  border: "none",
-                  padding: "6px 10px",
-                  borderRadius: "6px",
-                  cursor: "pointer",
-                }}
-              >
-                Delete Photo
-              </button>
-            )}
+          <div className="page-header">
+            <h1>Admin Profile</h1>
+            <p>Manage your profile information.</p>
           </div>
-        </div>
 
-        {/* Form Fields */}
-        <input
-          name="name"
-          placeholder="Admin Name"
-          value={profile.name}
-          onChange={handleChange}
-        />
+          <div className="form-card" style={{ maxWidth: "700px" }}>
 
-        <input
-          name="email"
-          placeholder="Admin Email"
-          value={profile.email}
-          onChange={handleChange}
-        />
+            {/* Profile Image */}
+            <div style={{ textAlign: "center", marginBottom: "20px" }}>
+              <img
+                src={
+                  profile.image ||
+                  "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                }
+                alt="profile"
+                style={{
+                  width: "100px",
+                  height: "100px",
+                  borderRadius: "50%",
+                  objectFit: "cover",
+                  marginBottom: "10px",
+                }}
+              />
 
-        <input
-          name="company"
-          placeholder="Company Name"
-          value={profile.company}
-          onChange={handleChange}
-        />
+              <div style={{ display: "flex", gap: "10px", justifyContent: "center" }}>
+                <input type="file" onChange={handleImageUpload} />
 
-        <button onClick={handleSave}>Save Profile</button>
+                {profile.image && (
+                  <button
+                    onClick={handleDeletePhoto}
+                    style={{
+                      background: "#ef4444",
+                      color: "white",
+                      border: "none",
+                      padding: "6px 12px",
+                      borderRadius: "6px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Delete Photo
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* Form Fields */}
+            <input
+              name="name"
+              placeholder="Admin Name"
+              value={profile.name || ""}
+              onChange={handleChange}
+            />
+
+            <input
+              name="email"
+              placeholder="Admin Email"
+              value={profile.email || ""}
+              onChange={handleChange}
+            />
+
+            <input
+              name="company"
+              placeholder="Company Name"
+              value={profile.company || ""}
+              onChange={handleChange}
+            />
+
+            <button onClick={handleSave}>
+              Save Profile
+            </button>
+
+          </div>
+
+        </main>
       </div>
-      <div >
-        <a href="/student-dashboard" className="back-home">Back</a>
-       </div>
-       <div style={{textAlign: "center", margin: "20px 0"}}>
-      </div>
-    </div>
+    </>
   );
 };
 

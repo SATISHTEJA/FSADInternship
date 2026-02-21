@@ -1,6 +1,7 @@
 import '../Styles/Homestyling.css'
 import { motion } from "framer-motion";
 import { Briefcase, ClipboardCheckIcon, ClipboardList, Database, GlobeIcon, MessageSquare, MessagesSquareIcon, User } from "lucide-react";
+import Footer from '../Components/Footer';
 
 
 const Home = () => {
@@ -9,7 +10,7 @@ const Home = () => {
       title: "Post Internship Opportunities",
       description:
         "Admins can create and manage internship openings with detailed descriptions.",
-      icon: <Briefcase size={40} />,
+      icon: <Briefcase size={40}  />,
       Link: "/pio",
     },
     {
@@ -61,8 +62,9 @@ const Home = () => {
   ];
 
   return (
+    <>
     <div className="page">
-        <div className="headermain,text">
+        <div className="headermain text">
             <h1>Remote Internship Management</h1>
             <p>Track · Evaluate · Succeed</p>
         </div>
@@ -80,6 +82,7 @@ const Home = () => {
         <div>
         </div>
     </div>
+    </>
   );
 };
 
