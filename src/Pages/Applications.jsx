@@ -22,40 +22,9 @@ const Applications = () => {
   }, []);
 
   const updateStatus = (id, newStatus) => {
-  const updated = applications.map((app) =>
-    app.id === id ? { ...app, status: newStatus } : app
-  );
-
-  setApplications(updated);
-  localStorage.setItem("applications", JSON.stringify(updated));
-
-  /* ===== IF APPROVED → CREATE TASKS ===== */
-  if (newStatus === "Approved") {
-    const approvedApp = updated.find(app => app.id === id);
-
-    const existingTasks =
-      JSON.parse(localStorage.getItem("tasks")) || [];
-
-    const newTasks = [
-      {
-        id: Date.now(),
-        internshipTitle: approvedApp.internshipTitle,
-        title: "Setup Development Environment",
-        status: "Pending",
-      },
-      {
-        id: Date.now() + 1,
-        internshipTitle: approvedApp.internshipTitle,
-        title: "Complete First Assignment",
-        status: "Pending",
-      }
-    ];
-
-    localStorage.setItem(
-      "tasks",
-      JSON.stringify([...existingTasks, ...newTasks])
+    const updated = applications.map((app) =>
+      app.id === id ? { ...app, status: newStatus } : app
     );
-  }
 
     setApplications(updated);
     localStorage.setItem("applications", JSON.stringify(updated));
@@ -119,19 +88,56 @@ const Applications = () => {
                 </div>
 
                 <div className="app-right">
-                  <button
-                    className="quick-action primary"
-                    onClick={() => updateStatus(app.id, "Approved")}
-                  >
-                    Approve
-                  </button>
 
-                  <button
-                    className="quick-action secondary"
-                    onClick={() => updateStatus(app.id, "Rejected")}
-                  >
-                    Reject
-                  </button>
+                  {/* SHOW BUTTONS ONLY IF PENDING */}
+                  {(!app.status || app.status === "Pending") && (
+                    <>
+                      <button
+                        className="quick-action primary"
+                        onClick={() => updateStatus(app.id, "Approved")}
+                      >
+                        Approve
+                      </button>
+
+                      <button
+                        className="quick-action secondary"
+                        onClick={() => updateStatus(app.id, "Rejected")}
+                      >
+                        Reject
+                      </button>
+                    </>
+                  )}
+
+                  {/* SHOW GREEN APPROVED BOX */}
+                  {app.status === "Approved" && (
+                    <div
+                      style={{
+                        background: "#d4edda",
+                        color: "#155724",
+                        padding: "8px 12px",
+                        borderRadius: "6px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      ✅ Approved
+                    </div>
+                  )}
+
+                  {/* SHOW RED REJECTED BOX */}
+                  {app.status === "Rejected" && (
+                    <div
+                      style={{
+                        background: "#f8d7da",
+                        color: "#721c24",
+                        padding: "8px 12px",
+                        borderRadius: "6px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      ❌ Rejected
+                    </div>
+                  )}
+
                 </div>
               </div>
             ))
