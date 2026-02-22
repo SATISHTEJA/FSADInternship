@@ -17,7 +17,7 @@ const MyTasks = () => {
   const [tasks, setTasks] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
   const [description, setDescription] = useState("");
-  const [fileName, setFileName] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
 
   useEffect(() => {
     loadTasks();
@@ -49,17 +49,20 @@ const MyTasks = () => {
   const openSubmitModal = (task) => {
     setSelectedTask(task);
     setDescription("");
-    setFileName("");
+    setSelectedFile(null);
   };
 
-  const handleFileUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setFileName(file.name);
-    }
+  // ✅ Convert file to Base64
+  const convertToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
   };
 
-  const handleSubmitTask = () => {
+  const handleSubmitTask = async () => {
     if (!selectedTask || !description.trim()) {
       alert("Please enter task description.");
       return;
@@ -82,13 +85,22 @@ const MyTasks = () => {
         );
 
       if (taskIndex !== -1) {
+        let fileData = null;
+        let fileName = null;
+
+        if (selectedFile) {
+          fileData = await convertToBase64(selectedFile);
+          fileName = selectedFile.name;
+        }
+
         allTasks[studentIndex].tasks[taskIndex] = {
           ...allTasks[studentIndex].tasks[taskIndex],
           status: "Completed",
           submission: {
             description,
             fileName,
-            submittedAt: new Date().toISOString(),
+            fileData,
+            submittedAt: new Date().toLocaleString(),
           },
         };
 
@@ -99,8 +111,6 @@ const MyTasks = () => {
     setSelectedTask(null);
     loadTasks();
   };
-
-  // ==== CALCULATIONS ====
 
   const completedTasks = tasks.filter(
     (t) => t.status === "Completed"
@@ -155,10 +165,8 @@ const MyTasks = () => {
         <main className="admin-main">
           <div className="page-header">
             <h1>My Tasks</h1>
-            <p>Manage and track your internship assignments.</p>
           </div>
 
-          {/* ==== PROGRESS SECTION ==== */}
           <div className="dashboard-card">
             <h3>Overall Task Completion</h3>
 
@@ -172,14 +180,9 @@ const MyTasks = () => {
             <strong>{completionPercentage}%</strong>
           </div>
 
-          {/* ==== PENDING TASKS ==== */}
           {pendingTasks.map((task) => (
             <div key={task.id} className="dashboard-card">
               <h4>{task.title}</h4>
-              <p>
-                <strong>Question:</strong>{" "}
-                {task.question || "No question provided"}
-              </p>
 
               <button
                 className="quick-action primary"
@@ -190,72 +193,83 @@ const MyTasks = () => {
             </div>
           ))}
 
-          {/* ==== COMPLETED TASKS ==== */}
           {completedTasks.map((task) => (
             <div key={task.id} className="dashboard-card">
               <h4>{task.title}</h4>
               <p>Status: Completed</p>
               <p>
-                <strong>Your Submission:</strong>{" "}
+                <strong>Description:</strong>{" "}
                 {task.submission?.description}
               </p>
-              {task.submission?.fileName && (
-                <p>File: {task.submission.fileName}</p>
+
+              {task.submission?.fileData && (
+                <a
+                  href={task.submission.fileData}
+                  download={task.submission.fileName}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  View / Download File
+                </a>
               )}
             </div>
           ))}
         </main>
       </div>
 
-      {/* ===== SUBMIT MODAL ===== */}
       {selectedTask && (
-        <div className="modal-overlay" style={{ zIndex: 9999 }}>
-          <div className="modal-container">
-            <div className="modal-header">
-              <h3>Submit Task</h3>
-            </div>
+  <div className="modal-overlay" style={{ zIndex: 9999 }}>
+    <div className="modal-container">
+      <div className="modal-header">
+        <h3>Submit Task</h3>
+      </div>
 
-            <p>
-              <strong>Task:</strong>{" "}
-              {selectedTask.title || "N/A"}
-            </p>
+      <p>
+        <strong>Task:</strong>{" "}
+        {selectedTask.title || "N/A"}
+      </p>
 
-            <label>Description *</label>
-            <textarea
-              value={description}
-              onChange={(e) =>
-                setDescription(e.target.value)
-              }
-              rows="4"
-            />
+      <label>Description *</label>
+      <textarea
+        value={description}
+        onChange={(e) =>
+          setDescription(e.target.value)
+        }
+        rows="4"
+      />
 
-            <label>Upload File (Optional)</label>
-            <input type="file" onChange={handleFileUpload} />
+      <label>Upload File (Optional)</label>
+      <input
+        type="file"
+        onChange={(e) =>
+          setSelectedFile(e.target.files[0])
+        }
+      />
 
-            {fileName && (
-              <p className="resume-name">
-                Selected: {fileName}
-              </p>
-            )}
-
-            <div className="modal-actions">
-              <button
-                className="cancel-btn"
-                onClick={() => setSelectedTask(null)}
-              >
-                Cancel
-              </button>
-
-              <button
-                className="submit-btn"
-                onClick={handleSubmitTask}
-              >
-                Submit
-              </button>
-            </div>
-          </div>
-        </div>
+      {selectedFile && (
+        <p className="resume-name">
+          Selected: {selectedFile.name}
+        </p>
       )}
+
+      <div className="modal-actions">
+        <button
+          className="cancel-btn"
+          onClick={() => setSelectedTask(null)}
+        >
+          Cancel
+        </button>
+
+        <button
+          className="submit-btn"
+          onClick={handleSubmitTask}
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+)}
     </>
   );
 };

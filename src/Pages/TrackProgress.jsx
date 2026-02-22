@@ -13,12 +13,17 @@ import {
 
 const TrackProgress = () => {
   const navigate = useNavigate();
+
   const [approvedStudents, setApprovedStudents] = useState([]);
   const [tasksData, setTasksData] = useState([]);
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [newTask, setNewTask] = useState("");
 
   useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = () => {
     const apps =
       JSON.parse(localStorage.getItem("applications")) || [];
 
@@ -32,7 +37,7 @@ const TrackProgress = () => {
       JSON.parse(localStorage.getItem("tasks")) || [];
 
     setTasksData(storedTasks);
-  }, []);
+  };
 
   const getStudentTasks = (email) => {
     return tasksData.find((t) => t.studentEmail === email);
@@ -40,18 +45,20 @@ const TrackProgress = () => {
 
   const getProgress = (email) => {
     const student = getStudentTasks(email);
-    if (!student) return 0;
+    if (!student || !student.tasks) return 0;
 
     const total = student.tasks.length;
     const completed = student.tasks.filter(
       (t) => t.status === "Completed"
     ).length;
 
-    return total === 0 ? 0 : Math.round((completed / total) * 100);
+    return total === 0
+      ? 0
+      : Math.round((completed / total) * 100);
   };
 
   const handleAddTask = () => {
-    if (!newTask || !selectedStudent) return;
+    if (!newTask.trim() || !selectedStudent) return;
 
     const allTasks =
       JSON.parse(localStorage.getItem("tasks")) || [];
@@ -60,29 +67,25 @@ const TrackProgress = () => {
       (s) => s.studentEmail === selectedStudent.email
     );
 
+    const newTaskObject = {
+      id: Date.now(),
+      title: newTask,
+      status: "Pending",
+    };
+
     if (index !== -1) {
-      allTasks[index].tasks.push({
-        id: Date.now(),
-        title: newTask,
-        status: "Pending",
-      });
+      allTasks[index].tasks.push(newTaskObject);
     } else {
       allTasks.push({
         studentEmail: selectedStudent.email,
         internshipTitle: selectedStudent.internshipTitle,
-        tasks: [
-          {
-            id: Date.now(),
-            title: newTask,
-            status: "Pending",
-          },
-        ],
+        tasks: [newTaskObject],
       });
     }
 
     localStorage.setItem("tasks", JSON.stringify(allTasks));
-    setTasksData(allTasks);
     setNewTask("");
+    loadData();
   };
 
   return (
@@ -90,6 +93,7 @@ const TrackProgress = () => {
       <Headerfordash />
 
       <div className="admin-layout" style={{ paddingTop: "70px" }}>
+        {/* ===== SIDEBAR ===== */}
         <aside className="admin-sidebar">
           <button onClick={() => navigate("/admin-dashboard")}>
             <LayoutDashboard size={18} />
@@ -122,13 +126,14 @@ const TrackProgress = () => {
           </button>
         </aside>
 
+        {/* ===== MAIN ===== */}
         <main className="admin-main">
           <div className="page-header">
             <h1>Track Progress</h1>
             <p>Click on an approved intern to assign tasks.</p>
           </div>
 
-          {/* APPROVED INTERN CARDS */}
+          {/* ===== APPROVED STUDENTS ===== */}
           <div className="stats-grid">
             {approvedStudents.map((student) => (
               <div
@@ -137,23 +142,24 @@ const TrackProgress = () => {
                 style={{ cursor: "pointer" }}
                 onClick={() => setSelectedStudent(student)}
               >
-                <div>
-                  <h3>{student.fullName}</h3>
-                  <p>{student.email}</p>
-                  <p style={{ marginTop: "6px" }}>
-                    {getProgress(student.email)}% Completed
-                  </p>
-                </div>
+                <h3>{student.name || "Student Name Not Given"}</h3>
+                <p>{student.email}</p>
+                <p style={{ marginTop: "6px" }}>
+                  {getProgress(student.email)}% Completed
+                </p>
               </div>
             ))}
           </div>
 
-          {/* TASK ASSIGNMENT PANEL */}
+          {/* ===== TASK PANEL ===== */}
           {selectedStudent && (
-            <div className="progress-card" style={{ marginTop: "30px" }}>
+            <div
+              className="progress-card"
+              style={{ marginTop: "30px" }}
+            >
               <div className="progress-top">
                 <div>
-                  <h3>{selectedStudent.fullName}</h3>
+                  <h3>{selectedStudent.name || "Student Name Not Given"}</h3>
                   <p>{selectedStudent.internshipTitle}</p>
                 </div>
                 <strong>
@@ -172,6 +178,7 @@ const TrackProgress = () => {
                 ></div>
               </div>
 
+              {/* ===== ADD TASK ===== */}
               <div style={{ marginTop: "20px" }}>
                 <input
                   placeholder="Enter new task..."
@@ -180,6 +187,7 @@ const TrackProgress = () => {
                     setNewTask(e.target.value)
                   }
                 />
+
                 <button
                   className="quick-action primary"
                   style={{ marginTop: "10px" }}
@@ -189,19 +197,57 @@ const TrackProgress = () => {
                 </button>
               </div>
 
-              {/* SHOW EXISTING TASKS */}
-              {getStudentTasks(selectedStudent.email)?.tasks.map(
-                (task) => (
-                  <div
-                    key={task.id}
-                    className="dashboard-card"
-                    style={{ marginTop: "15px" }}
-                  >
-                    <p>{task.title}</p>
-                    <small>Status: {task.status}</small>
-                  </div>
-                )
-              )}
+              {/* ===== SHOW TASKS ===== */}
+              {getStudentTasks(
+                selectedStudent.email
+              )?.tasks?.map((task) => (
+                <div
+                  key={task.id}
+                  className="dashboard-card"
+                  style={{ marginTop: "15px" }}
+                >
+                  <h4>{task.title}</h4>
+                  <p>Status: {task.status}</p>
+
+                  {/* SHOW SUBMISSION */}
+                  {task.submission && (
+                    <div
+                      style={{
+                        marginTop: "10px",
+                        background: "#f5f5f5",
+                        padding: "10px",
+                        borderRadius: "8px",
+                      }}
+                    >
+                      <p>
+                        <strong>Description:</strong>{" "}
+                        {task.submission?.description}
+                      </p>
+
+                      {task.submission?.fileData && (
+                        <a
+                          href={task.submission.fileData}
+                          download={
+                            task.submission.fileName
+                          }
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="view-btn"
+                        >
+                          →View / Download File←
+                        </a>
+                      )}
+
+                      <br />
+
+                      <small>
+                        Submitted At:{" "}
+                        {task.submission?.submittedAt}
+                      </small>
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
           )}
         </main>

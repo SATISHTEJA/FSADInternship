@@ -78,7 +78,7 @@ const Applications = () => {
           </button>
 
           <button className="active">
-            <Users size={18} color=""/>
+            <Users size={18} />
             Applications
           </button>
 

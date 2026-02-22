@@ -8,7 +8,7 @@ const Headerfordash = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("loggedUser"));
+    const storedUser = JSON.parse(localStorage.getItem("adminProfile"));
     if (storedUser) setUser(storedUser);
   }, []);
 
