@@ -7,7 +7,7 @@ import {
   Search,
   FileText,
   CheckSquare,
-  MessageSquare,
+  MessageSquare,ClipboardList,
   Star,
   User,
   TrendingUp,
@@ -72,8 +72,8 @@ const Feedback = () => {
             My Applications
           </button>
 
-          <button onClick={() => navigate("/my-tasks")}>
-            <CheckSquare size={18} />
+          <button onClick={() => navigate("/mytasks")}>
+            <ClipboardList size={18} />
             My Tasks
           </button>
 

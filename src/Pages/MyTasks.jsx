@@ -126,7 +126,7 @@ const MyTasks = () => {
             Dashboard
           </button>
 
-          <button onClick={() => navigate("/browse")}>
+          <button onClick={() => navigate("/browse-internships")}>
             <Search size={18} />
             Browse Internships
           </button>

@@ -74,7 +74,7 @@ const StudentProfile = () => {
             Browse Internships
           </button>
 
-          <button onClick={() => navigate("/my-applications")}>
+          <button onClick={() => navigate("/myapplications")}>
             <FileText size={18} />
             My Applications
           </button>

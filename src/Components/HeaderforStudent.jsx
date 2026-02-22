@@ -25,7 +25,7 @@ const HeaderforStudent = () => {
         <div style={{ textAlign: "right" }}>
           <strong style={{color:"black"}}>{student.name || "Student"}</strong>
           <div style={{ fontSize: "12px", color: "#6b7280" }}>
-            {student.email }
+            {student.email || "student@gmail.com" }
           </div>
         </div>
 
