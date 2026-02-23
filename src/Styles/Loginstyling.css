@@ -95,7 +95,7 @@
 
 .usealignleft {
   display: flex;
-  color: rgb(250, 251, 252);
+  color: rgb(253, 253, 253);
   justify-content: left;
   text-decoration: none;
   align-items: left;
@@ -112,19 +112,19 @@
 }
 
 .link-row a {
-  color: rgb(0, 6, 11);
+  color: rgb(245, 246, 248);
   text-decoration: none;
 }
 
 .usealignleft:hover,.usealignright:hover {
-  color: #eceef0;
+  color: #2563eb;
 }
 
 .registerbut {
   cursor: pointer;
 }
 .registerbut:hover {
-  color: #f6f6f8;
+  color: #2563eb;
 }
 
 /* ===== MOBILE FIX ONLY ===== */

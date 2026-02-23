@@ -1,5 +1,5 @@
 import React from 'react'
-import logo from '../assets/header.png'
+import logo from '../assets/header1.png'
 import { Link } from 'react-router-dom'
 import '../Styles/Header.css'
 
@@ -12,7 +12,6 @@ const Cpheader = () => {
           alt="KL University"
           className="logo"
         />
-        <h2 className="title">Remote Internship Management</h2>
       </div>
 
       <div className="right">
