@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import logo from "../assets/login.jpg";
-import"../Styles/Loginstyling.css"
-import Forgetpass from "./Forgetpass";
+import "../Styles/Loginstyling.css";
 
 const Login = () => {
-  const [role, setRole] = useState("student");
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // 👇 Read role from navigation state
+  const [role, setRole] = useState(location.state?.role || "student");
 
   const handleLogin = () => {
     if (role === "student") {
@@ -17,12 +19,12 @@ const Login = () => {
   };
 
   return (
-    <>
     <div
       className="login-bg"
       style={{ backgroundImage: `url(${logo})` }}
     >
       <div className="login-card">
+
         {/* ROLE SWITCH */}
         <div className="role-switch">
           <button
@@ -45,20 +47,21 @@ const Login = () => {
         <input type="email" placeholder="Email address" />
         <input type="password" placeholder="Password" />
 
-        {/* ✅ call handleLogin */}
         <button className="login-btn" onClick={handleLogin}>
           LOGIN
         </button>
+
         <br />
         <a href="/Forgetpass" className="forgot">Forgot Password?</a>
-        <br />
+
         <div className="link-row">
           <a href="/register" className="usealignleft">Don't have an account? Register</a>
           <a href="/" className="usealignright">Back to Home</a>
         </div>
+
       </div>
     </div>
-    </>
-  );};
+  );
+};
 
 export default Login;

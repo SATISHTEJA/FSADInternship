@@ -152,6 +152,15 @@ const BrowseInternships = () => {
           <div className="page-header">
             <h1>Browse Internships</h1>
           </div>
+          <div className="browse-search-box">
+  <Search size={18} />
+  <input
+    type="text"
+    placeholder="Search by title..."
+    value={search}
+    onChange={(e) => setSearch(e.target.value)}
+  />
+</div>
 
           {filteredInternships.map((intern) => (
             <div key={intern.id} className="browse-card">
