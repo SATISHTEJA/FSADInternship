@@ -1,7 +1,4 @@
-/* ========================= */
-/* ===== PUBLIC HEADER ===== */
-/* ========================= */
-
+/*public header*/
 .headerpages {
   height: 64px;
   display: flex;
@@ -74,10 +71,7 @@
   background: rgb(14, 20, 59);
 }
 
-
-/* ========================= */
-/* ===== DASH HEADER ======= */
-/* ========================= */
+/*dashboard header*/
 
 .dash-header {
   position: fixed;
@@ -119,10 +113,7 @@
   cursor: pointer;
 }
 
-
-/* ========================= */
-/* ===== ADMIN LAYOUT ====== */
-/* ========================= */
+/*admin layout*/
 
 .admin-layout {
   display: flex;
@@ -142,10 +133,7 @@
   background: #f5f7fb;
 }
 
-
-/* ========================= */
-/* ===== FORM CARD ========= */
-/* ========================= */
+/*form card*/
 
 .form-card {
   width: 100%;

@@ -44,7 +44,6 @@ const MyApplications = () => {
 
       <div className="admin-layout" style={{ paddingTop: "70px" }}>
         
-        {/* SIDEBAR */}
         <aside className="admin-sidebar">
           <button onClick={() => navigate("/student-dashboard")}>
             <LayoutDashboard size={18} />
@@ -77,7 +76,6 @@ const MyApplications = () => {
           </button>
         </aside>
 
-        {/* MAIN */}
         <main className="admin-main">
 
           <div className="page-header">
@@ -85,7 +83,6 @@ const MyApplications = () => {
             <p>Track the status of your internship applications.</p>
           </div>
 
-          {/* ===== STATS ===== */}
           <section className="stats-grid">
 
             <div className="stat-card">
@@ -122,7 +119,6 @@ const MyApplications = () => {
 
           </section>
 
-          {/* ===== APPLICATION LIST ===== */}
           {applications.length === 0 ? (
             <div className="dashboard-card">
               <p>You haven't applied to any internships yet.</p>
@@ -149,7 +145,6 @@ const MyApplications = () => {
                     </div>
                   </div>
 
-                  {/* Status Message */}
                   {app.status === "Approved" && (
                     <div className="dashboard-card" style={{ marginTop: "15px", background: "#ecfdf5", border: "1px solid #bbf7d0" }}>
                       🎉 Congratulations! Your application has been approved.

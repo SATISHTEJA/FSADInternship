@@ -14,7 +14,6 @@ const AdminProfile = () => {
     image: "",
   });
 
-  // Load saved profile
   useEffect(() => {
     const savedProfile =
       JSON.parse(localStorage.getItem("adminProfile")) || {};
@@ -47,12 +46,10 @@ const AdminProfile = () => {
 
   return (
     <>
-      {/* 🔵 TOP HEADER */}
       <Headerfordash />
 
       <div className="admin-layout" style={{ paddingTop: "70px" }}>
         
-        {/* 🔵 SIDEBAR */}
         <aside className="admin-sidebar">
         
           <button  onClick={() => navigate("/admin-dashboard")}>
@@ -88,7 +85,6 @@ const AdminProfile = () => {
           </button>
         
         </aside>
-        {/* 🔵 MAIN CONTENT */}
         <main className="admin-main">
 
           <div className="page-header">
@@ -98,7 +94,6 @@ const AdminProfile = () => {
 
           <div className="form-card" style={{ maxWidth: "700px" }}>
 
-            {/* Profile Image */}
             <div style={{ textAlign: "center", marginBottom: "20px" }}>
               <img
                 src={
@@ -136,7 +131,6 @@ const AdminProfile = () => {
               </div>
             </div>
 
-            {/* Form Fields */}
             <input
               name="name"
               placeholder="Admin Name"

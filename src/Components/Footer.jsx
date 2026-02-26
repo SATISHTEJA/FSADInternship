@@ -5,13 +5,13 @@ const Footer = () => {
     <footer
       style={{
         width: "100%",
-        maxWidth: "100vw",      // ✅ Prevent overflow
+        maxWidth: "100vw",
         padding: "20px 15px",
         background: "White",
         color: "Black",
         fontSize: "25px",
         textAlign: "center",
-        boxSizing: "border-box", // ✅ Important
+        boxSizing: "border-box",
         borderRadius:"10px",
       }}
     >

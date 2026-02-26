@@ -21,7 +21,6 @@ const StudentDashboard = () => {
   const [approvedInternship, setApprovedInternship] = useState(null);
   const [tasks, setTasks] = useState([]);
 
-  /* ================= LOAD DATA ================= */
   const loadDashboardData = () => {
     const loggedStudent =
       JSON.parse(localStorage.getItem("studentProfile")) || {};
@@ -41,7 +40,6 @@ const StudentDashboard = () => {
     const storedTasks =
       JSON.parse(localStorage.getItem("tasks")) || [];
 
-    // Flexible match (prevents property mismatch issue)
     const myTasks = storedTasks.filter(
       (task) =>
         task.assignedTo === loggedStudent.email ||
@@ -62,7 +60,6 @@ const StudentDashboard = () => {
     };
   }, []);
 
-  /* ================= TASK CALCULATIONS ================= */
 
   const completed = tasks.filter(
   (t) =>
@@ -90,7 +87,6 @@ const pending = tasks.filter(
       <HeaderforStudent />
 
       <div className="admin-layout" style={{ paddingTop: "70px" }}>
-        {/* ================= SIDEBAR ================= */}
         <aside className="admin-sidebar">
           <button
             className="active"
@@ -126,7 +122,6 @@ const pending = tasks.filter(
           </button>
         </aside>
 
-        {/* ================= MAIN ================= */}
         <main className="admin-main">
           <div className="page-header">
             <h1>
@@ -135,7 +130,6 @@ const pending = tasks.filter(
             <p>Here's an overview of your internship progress.</p>
           </div>
 
-          {/* ================= CURRENT INTERNSHIP ================= */}
           {approvedInternship && (
             <section className="dashboard-card">
               <h2>Current Internship</h2>
@@ -167,7 +161,6 @@ const pending = tasks.filter(
             </section>
           )}
 
-          {/* ================= STATS ================= */}
           <section className="stats-grid">
             <div className="stat-card">
               <div className="stat-left">
@@ -202,7 +195,6 @@ const pending = tasks.filter(
             </div>
           </section>
 
-          {/* ================= PROGRESS BAR ================= */}
           <section className="dashboard-card">
             <h2>Progress Overview</h2>
 

@@ -22,7 +22,6 @@ const Feedback = () => {
 
   const [evaluations, setEvaluations] = useState([]);
 
-  /* ================= LOAD STUDENT EVALUATIONS ================= */
   useEffect(() => {
     const allEvaluations =
       JSON.parse(localStorage.getItem("evaluations")) || [];
@@ -35,7 +34,6 @@ const Feedback = () => {
     setEvaluations(studentEvaluations);
   }, [student.email]);
 
-  /* ================= STATS ================= */
 
   const totalFeedback = evaluations.length;
 
@@ -55,7 +53,6 @@ const Feedback = () => {
       <HeaderforStudent />
 
       <div className="admin-layout" style={{ paddingTop: "70px" }}>
-        {/* ================= SIDEBAR ================= */}
         <aside className="admin-sidebar">
           <button onClick={() => navigate("/student-dashboard")}>
             <LayoutDashboard size={18} />
@@ -88,7 +85,6 @@ const Feedback = () => {
           </button>
         </aside>
 
-        {/* ================= MAIN ================= */}
         <main className="admin-main">
           <div className="page-header">
             <h1>Feedback & Evaluations</h1>
@@ -97,7 +93,6 @@ const Feedback = () => {
             </p>
           </div>
 
-          {/* ================= STATS ================= */}
           <section className="stats-grid">
             <div className="stat-card">
               <div className="stat-left">
@@ -132,7 +127,6 @@ const Feedback = () => {
             </div>
           </section>
 
-          {/* ================= PERFORMANCE OVERVIEW ================= */}
           <div className="dashboard-card">
             <h2>Performance Overview</h2>
 
@@ -145,7 +139,6 @@ const Feedback = () => {
             </div>
           </div>
 
-          {/* ================= FEEDBACK LIST ================= */}
           <div className="dashboard-card">
             <h2>Recent Feedback</h2>
 

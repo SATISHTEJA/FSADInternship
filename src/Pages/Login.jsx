@@ -24,7 +24,6 @@ const Login = () => {
     >
       <div className="login-card">
 
-        {/* ROLE SWITCH */}
         <div className="role-switch">
           <button
             className={role === "student" ? "active" : ""}

@@ -25,11 +25,9 @@ const Evaluations = () => {
   const [improvements, setImprovements] = useState("");
   const [evaluations, setEvaluations] = useState([]);
 
-  /* ================= LOAD DATA ================= */
   useEffect(() => {
     const apps = JSON.parse(localStorage.getItem("applications")) || [];
 
-    // filter approved interns
     const approved = apps.filter(
       (app) => app.status === "Approved"
     );
@@ -41,7 +39,6 @@ const Evaluations = () => {
     setEvaluations(storedEvaluations);
   }, []);
 
-  /* ================= SUBMIT ================= */
   const handleSubmit = () => {
     if (!selectedInternEmail || rating === 0) {
       alert("Please select intern and give rating.");
@@ -72,7 +69,6 @@ const Evaluations = () => {
 
     alert("Evaluation submitted successfully!");
 
-    // Reset
     setSelectedInternEmail("");
     setRating(0);
     setTechnical("");
@@ -82,7 +78,6 @@ const Evaluations = () => {
     setImprovements("");
   };
 
-  /* ================= STATS ================= */
   const totalEvaluations = evaluations.length;
 
   const avgRating =
@@ -286,7 +281,6 @@ const Evaluations = () => {
             </div>
           </div>
 
-          {/* ===== RECENT EVALUATIONS ===== */}
           <div className="dashboard-card">
             <h2>Recent Evaluations</h2>
 

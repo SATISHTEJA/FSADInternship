@@ -21,19 +21,16 @@ const StudentProfile = () => {
     image: "",
   });
 
-  /* ================= LOAD PROFILE ================= */
   useEffect(() => {
     const savedProfile =
       JSON.parse(localStorage.getItem("studentProfile")) || {};
     setProfile(savedProfile);
   }, []);
 
-  /* ================= HANDLE INPUT ================= */
   const handleChange = (e) => {
     setProfile({ ...profile, [e.target.name]: e.target.value });
   };
 
-  /* ================= IMAGE UPLOAD ================= */
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -49,7 +46,6 @@ const StudentProfile = () => {
     setProfile({ ...profile, image: "" });
   };
 
-  /* ================= SAVE ================= */
   const handleSave = () => {
     localStorage.setItem("studentProfile", JSON.stringify(profile));
     alert("Profile saved successfully!");
@@ -61,7 +57,6 @@ const StudentProfile = () => {
 
       <div className="admin-layout" style={{ paddingTop: "70px" }}>
 
-        {/* ===== SIDEBAR ===== */}
         <aside className="admin-sidebar">
 
           <button onClick={() => navigate("/student-dashboard")}>
@@ -96,7 +91,6 @@ const StudentProfile = () => {
 
         </aside>
 
-        {/* ===== MAIN ===== */}
         <main className="admin-main">
 
           <div className="page-header">
@@ -106,7 +100,6 @@ const StudentProfile = () => {
 
           <div className="form-card" style={{ maxWidth: "700px" }}>
 
-            {/* ===== PROFILE IMAGE ===== */}
             <div style={{ textAlign: "center", marginBottom: "20px" }}>
               <img
                 src={
@@ -150,7 +143,6 @@ const StudentProfile = () => {
               </div>
             </div>
 
-            {/* ===== FORM FIELDS ===== */}
             <input
               name="name"
               placeholder="Full Name"

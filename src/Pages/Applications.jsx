@@ -89,7 +89,6 @@ const Applications = () => {
 
                 <div className="app-right">
 
-                  {/* SHOW BUTTONS ONLY IF PENDING */}
                   {(!app.status || app.status === "Pending") && (
                     <>
                       <button
@@ -108,7 +107,6 @@ const Applications = () => {
                     </>
                   )}
 
-                  {/* SHOW GREEN APPROVED BOX */}
                   {app.status === "Approved" && (
                     <div
                       style={{
@@ -123,7 +121,6 @@ const Applications = () => {
                     </div>
                   )}
 
-                  {/* SHOW RED REJECTED BOX */}
                   {app.status === "Rejected" && (
                     <div
                       style={{

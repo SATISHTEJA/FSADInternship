@@ -11,7 +11,6 @@
   padding: 0 24px;
 }
 
-/* LEFT */
 .dash-left {
   display: flex;
   align-items: center;
@@ -37,7 +36,6 @@
   margin: 0;
 }
 
-/* RIGHT */
 .dash-right {
   display: flex;
   align-items: center;

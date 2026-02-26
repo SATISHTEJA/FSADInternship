@@ -204,7 +204,6 @@ const BrowseInternships = () => {
             </div>
           ))}
 
-          {/* APPLY MODAL */}
           {showApplyModal && selectedIntern && (
             <div className="modal-overlay">
               <div className="modal-container">
@@ -294,7 +293,6 @@ const BrowseInternships = () => {
             </div>
           )}
 
-          {/* DETAILS MODAL (SEPARATE — NOT NESTED) */}
           {showDetailsModal && selectedIntern && (
             <div className="modal-overlay">
               <div className="modal-container">

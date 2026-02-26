@@ -58,7 +58,6 @@ const Home = () => {
     <>
       <div className="home-wrapper">
 
-        {/* HERO */}
         <section className="hero">
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
@@ -84,7 +83,6 @@ const Home = () => {
           </div>
         </section>
 
-        {/* WHY SECTION */}
         <section className="why">
           <h2 className="section-title">Why Choose InternHub?</h2>
           <p className="section-sub">
@@ -118,7 +116,6 @@ const Home = () => {
           </div>
         </section>
 
-        {/* FEATURES */}
         <section className="features">
           <h2 className="section-title">Platform Features</h2>
 
@@ -142,7 +139,6 @@ const Home = () => {
           </div>
         </section>
 
-        {/* HOW IT WORKS */}
         <section className="how">
           <h2 className="section-title">How It Works</h2>
           <p className="section-sub">
@@ -176,7 +172,6 @@ const Home = () => {
           </div>
         </section>
 
-        {/* CTA */}
         <section className="cta">
           <h2>Ready to Transform Your Internship Experience?</h2>
           <Link to="/register">

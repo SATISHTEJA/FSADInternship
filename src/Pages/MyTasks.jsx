@@ -184,7 +184,6 @@ const MyTasks = () => {
             <h1>My Tasks</h1>
           </div>
 
-          {/* Overall Progress */}
           <div className="dashboard-card">
             <h3>Overall Task Completion</h3>
             <div className="progress-bar" style={{ margin: "10px 0" }}>
@@ -196,12 +195,10 @@ const MyTasks = () => {
             <strong>{completionPercentage}%</strong>
           </div>
 
-          {/* Pending Tasks */}
           {pendingTasks.map((task) => (
             <div key={task.id} className="dashboard-card">
               <h4>{task.title}</h4>
 
-              {/* Admin Assigned File */}
               {task.fileData && (
                 <a
                   href={task.fileData}
@@ -223,7 +220,6 @@ const MyTasks = () => {
             </div>
           ))}
 
-          {/* Completed Tasks */}
           {completedTasks.map((task) => (
             <div key={task.id} className="dashboard-card">
               <h4>{task.title}</h4>
@@ -262,7 +258,6 @@ const MyTasks = () => {
         </main>
       </div>
 
-      {/* Submit Modal */}
       {selectedTask && (
         <div className="modal-overlay" style={{ zIndex: 9999 }}>
           <div className="modal-container">

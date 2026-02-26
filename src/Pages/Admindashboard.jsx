@@ -18,7 +18,6 @@ const AdminDashboard = () => {
   const [internships, setInternships] = useState([]);
   const [applications, setApplications] = useState([]);
 
-  /* ================= LOAD DATA FUNCTION ================= */
   const loadData = () => {
     const storedInternships =
       JSON.parse(localStorage.getItem("internships")) || [];
@@ -30,11 +29,9 @@ const AdminDashboard = () => {
     setApplications(storedApplications);
   };
 
-  /* ================= INITIAL + REAL TIME LISTENER ================= */
   useEffect(() => {
     loadData();
 
-    // Listen for custom updates
     window.addEventListener("dataUpdated", loadData);
 
     return () => {
@@ -42,7 +39,6 @@ const AdminDashboard = () => {
     };
   }, []);
 
-  /* ================= CALCULATIONS ================= */
 
   const underReview = applications.filter(
     (app) => app.status === "Under Review"
@@ -64,7 +60,6 @@ const AdminDashboard = () => {
       <Headerfordash />
 
       <div className="admin-layout" style={{ paddingTop: "70px" }}>
-        {/* ================= SIDEBAR ================= */}
         <aside className="admin-sidebar">
           <button
             className="active"
@@ -100,7 +95,6 @@ const AdminDashboard = () => {
           </button>
         </aside>
 
-        {/* ================= MAIN ================= */}
         <main className="admin-main">
           <div className="page-header">
             <h1>Dashboard</h1>
@@ -109,7 +103,6 @@ const AdminDashboard = () => {
             </p>
           </div>
 
-          {/* ================= STATS ================= */}
           <section className="stats-grid">
             <div className="stat-card">
               <div className="stat-left">
@@ -144,7 +137,6 @@ const AdminDashboard = () => {
             </div>
           </section>
 
-          {/* ================= QUICK ACTIONS ================= */}
           <section className="dashboard-card">
   <h2>Quick Actions</h2>
 
@@ -177,7 +169,6 @@ const AdminDashboard = () => {
   </div>
 </section>
 
-          {/* ================= RECENT APPLICATIONS ================= */}
           <section className="dashboard-card">
             <h2>Recent Applications</h2>
 
@@ -215,7 +206,6 @@ const AdminDashboard = () => {
             </div>
           </section>
 
-          {/* ================= INTERN PROGRESS ================= */}
           <section className="dashboard-card">
             <h2>Intern Progress Overview</h2>
 

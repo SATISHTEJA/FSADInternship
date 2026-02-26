@@ -2,7 +2,6 @@
   background: #f8fafc;
 }
 
-/* HERO */
 .hero {
   text-align: center;
   padding: 100px 20px 70px;
@@ -59,7 +58,6 @@
   cursor: pointer;
 }
 
-/* WHY */
 .why {
   padding: 80px 20px;
   text-align: center;
@@ -112,9 +110,7 @@
 .why-icon.purple { background: #ede9fe; color: #7c3aed; }
 .why-icon.green { background: #dcfce7; color: #16a34a; }
 
-/* ============================= */
-/* PLATFORM FEATURES GRID */
-/* ============================= */
+/*features stylling*/
 
 .features {
   padding: 80px 20px;
@@ -159,14 +155,12 @@
   line-height: 1.6;
 }
 
-/* VERY IMPORTANT — remove link underline */
 .feature-link {
   text-decoration: none;
   color: inherit;
   display: block;
 }
 
-/* HOW */
 .how {
   padding: 80px 20px;
   background: #f1f5f9;
@@ -193,7 +187,6 @@
   margin-bottom: 10px;
 }
 
-/* CTA */
 .cta {
   padding: 70px 20px;
   background: linear-gradient(90deg, #2563eb, #9333ea);
@@ -201,7 +194,6 @@
   color: white;
 }
 
-/* RESPONSIVE */
 @media (max-width: 1000px) {
   .why-grid,
   .features-grid {

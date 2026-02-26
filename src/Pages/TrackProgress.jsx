@@ -168,7 +168,6 @@ const TrackProgress = () => {
             <p>Select a student to assign and monitor tasks.</p>
           </div>
 
-          {/* Student Cards */}
           <div className="stats-grid">
             {approvedStudents.map((student) => (
               <div
@@ -193,7 +192,6 @@ const TrackProgress = () => {
             ))}
           </div>
 
-          {/* Task Panel */}
           {selectedStudent && (
             <div className="progress-card" style={{ marginTop: "30px" }}>
               <h3>{selectedStudent.name}</h3>
@@ -239,7 +237,6 @@ const TrackProgress = () => {
                 </button>
               </div>
 
-              {/* Show Tasks */}
               {getStudentTasks(selectedStudent.email)?.tasks?.map(
                 (task) => (
                   <div
@@ -250,7 +247,6 @@ const TrackProgress = () => {
                     <h4>{task.title}</h4>
                     <p>Status: {task.status}</p>
 
-                    {/* Admin Assigned File */}
                     {task.fileData && (
                       <a
                         href={task.fileData}
@@ -262,7 +258,6 @@ const TrackProgress = () => {
                       </a>
                     )}
 
-                    {/* Student Submission */}
                     {task.submission && (
                       <div
                         style={{

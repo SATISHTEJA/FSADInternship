@@ -26,7 +26,6 @@ const Postinternship = () => {
     skills: "",
   });
 
-  // Load internships
   useEffect(() => {
     const stored = JSON.parse(localStorage.getItem("internships")) || [];
     setInternships(stored);
@@ -42,7 +41,7 @@ const Postinternship = () => {
     const newInternship = {
       id: Date.now(),
       ...form,
-      applicants: [], // important for future use
+      applicants: [],
     };
 
     const updated = [newInternship, ...internships];
@@ -115,7 +114,6 @@ const Postinternship = () => {
             <p>Create a new internship opportunity for students.</p>
           </div>
 
-          {/* ================= FORM CARD ================= */}
           <div className="form-card">
             <h2>Internship Details</h2>
 
@@ -180,7 +178,6 @@ const Postinternship = () => {
             </div>
           </div>
 
-          {/* ================= SEPARATE POSTED SECTION ================= */}
           <div className="dashboard-card">
             <h2>Posted Internships</h2>
 
