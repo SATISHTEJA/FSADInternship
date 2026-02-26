@@ -7,7 +7,6 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // 👇 Read role from navigation state
   const [role, setRole] = useState(location.state?.role || "student");
 
   const handleLogin = () => {

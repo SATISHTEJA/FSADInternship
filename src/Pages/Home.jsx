@@ -75,10 +75,10 @@ const Home = () => {
           </p>
 
           <div className="hero-buttons">
-            <Link to="/tasks">
+            <Link to="/login" state={{ role: "student" }}>
               <button className="primary-btn">Start as Student</button>
             </Link>
-            <Link to="/pio">
+            <Link to="/login" state={{ role: "admin" }}>
               <button className="secondary-btn">Employer Access</button>
             </Link>
           </div>
@@ -129,7 +129,7 @@ const Home = () => {
                 className="feature-card"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: i * 0.08 }}
+                transition={{ duration: 0.4, delay: i * 0.1 }}
                 viewport={{ once: true }}
               >
                 <Link to={f.link} className="feature-link">
@@ -179,14 +179,12 @@ const Home = () => {
         {/* CTA */}
         <section className="cta">
           <h2>Ready to Transform Your Internship Experience?</h2>
-          <Link to="/tasks">
+          <Link to="/register">
             <button className="primary-btn">Get Started</button>
           </Link>
         </section>
 
       </div>
-
-      <Footer />
     </>
   );
 };

@@ -9,7 +9,7 @@ const Footer = () => {
         padding: "20px 15px",
         background: "White",
         color: "Black",
-        fontSize: "16px",
+        fontSize: "25px",
         textAlign: "center",
         boxSizing: "border-box", // ✅ Important
         borderRadius:"10px",
