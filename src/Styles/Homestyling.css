@@ -129,34 +129,67 @@
 }
 
 .feature-card {
-  background: #ffffff;
-  padding: 35px 25px;
-  border-radius: 20px;
-  font-size: 20px;
-  text-align: center;
-  border: 1px solid #e5e7eb;
+  position: relative;
+
+  background: rgba(255,255,255,0.06);
+  border-radius: 16px;
+  padding: 20px;
+
+  /* card feel */
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+
+  /* ❌ no highlight initially */
+  border-top: 3px solid transparent;
+
   transition: all 0.3s ease;
-  
+  cursor: pointer;
 }
 
+/* 🔥 Hover state */
 .feature-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+  background: rgba(255,255,255,0.09);
+
+  /* ✅ highlight appears only on hover */
+  border-top: 3px solid #7c3aed;
 }
 
+/* Arrow */
+.feature-card::after {
+  content: "→";
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+  opacity: 0;
+  transition: 0.3s;
+  font-size: 18px;
+  color: #a78bfa;
+}
+
+.feature-card:hover::after {
+  opacity: 1;
+  transform: translateX(5px);
+}
+
+/* Icon */
 .feature-icon {
   margin-bottom: 18px;
   color: #7c3aed;
 }
 
+/* Title */
 .feature-card h3 {
-  font-size: 25px;
-  margin-bottom: 10px;
+  font-size: 22px;
+  margin-bottom: 8px;
   color: #111827;
+  font-weight: 600;
 }
 
+/* Description */
 .feature-card p {
-  font-size: 19px;
+  font-size: 15px;
   color: #6b7280;
   line-height: 1.6;
 }

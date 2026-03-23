@@ -7,6 +7,7 @@ const Headerfordash = () => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
+
   useEffect(() => {
     const loadUser = () => {
       const storedUser = JSON.parse(localStorage.getItem("adminProfile"));
@@ -40,21 +41,21 @@ const Headerfordash = () => {
       </div>
 
       {/* RIGHT */}
-      <div className="dash-right">
+      <div className="dash-right" style={{cursor:"pointer"}}>
 
         {/* NAME + EMAIL */}
         <div style={{ textAlign: "right" }}>
-          <strong style={{ fontSize: "16px", color: "black" }}>
+          <a href="admin-profile" className="headerloname"><strong style={{ fontSize: "16px", color: "black" }}>
             {user?.name || "Admin"}
-          </strong>
-          <div style={{ fontSize: "14px", color: "#6b7280" }}>
+          </strong></a>
+          <div style={{ fontSize: "14px", color: "#6b7280" }} onClick={() => navigate("/admin-profile")} className="headerloname">
             {user?.email || "admin@gmail.com"}
           </div>
         </div>
 
 
         {/* PROFILE IMAGE */}
-        <div>
+        <div onClick={() => navigate("/admin-profile")} style={{cursor:"pointer"}}>
           <img
             src={
               user?.image ||

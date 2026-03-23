@@ -1,11 +1,17 @@
 import React from "react";
+import { useEffect } from "react";
 import Cpheader from "./Cpheader";
+import PageNavigation from "../Cardpages/PageNavigation";
 import Footer from "../Components/Footer";
 
 const Progress = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
       <Cpheader />
+      <PageNavigation current="/progress" />
 
       <div
         style={{

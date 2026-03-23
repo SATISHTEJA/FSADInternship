@@ -1,4 +1,6 @@
 import "../Styles/Homestyling.css";
+import { useLocation } from "react-router-dom";
+import { useEffect, useRef } from "react";
 import { motion, px } from "framer-motion";
 import {
   Briefcase,
@@ -14,6 +16,28 @@ import {
 import { Link } from "react-router-dom";
 
 const Home = () => {
+  const location = useLocation();
+const featuresRef = useRef(null);
+
+useEffect(() => {
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+  const role = localStorage.getItem("role");
+
+  if (isLoggedIn) {
+    if (role === "student") navigate("/student-dashboard");
+    else navigate("/admin-dashboard");
+  }
+}, []);
+
+useEffect(() => {
+  if (location.state?.scrollTo === "features") {
+    featuresRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+    window.history.replaceState({}, document.title);
+  }
+}, [location]);
   const features = [
     {
       title: "Post Internship Opportunities",
@@ -64,7 +88,7 @@ const Home = () => {
             transition={{ duration: 0.6 }}
           >
             <span>Remote Internship <br />
-            Management Platform</span>
+              Management Platform</span>
           </motion.h1>
 
           <p className="hero-sub">
@@ -109,14 +133,14 @@ const Home = () => {
               <div className="why-icon green">
                 <ShieldCheck size={26} />
               </div>
-              <p className="fontsizehead"h3>Secure & Reliable</p>
+              <p className="fontsizehead" h3>Secure & Reliable</p>
               <p className="fontsizetext">Enterprise-grade security with full data protection.</p>
             </div>
           </div>
         </section>
 
-        <section className="features" >
-          <h2 className="section-title">Platform Features</h2>
+        <section className="features" ref={featuresRef}>
+          <h2 className="section-title">Platform Features<br/><span>Explore→</span></h2>
 
           <div className="features-grid">
             {features.map((f, i) => (
@@ -146,25 +170,25 @@ const Home = () => {
 
           <div className="how-grid">
             <div>
-              <span style={{color:"white"}}>1</span>
+              <span style={{ color: "white" }}>1</span>
               <h4>Sign Up</h4>
               <p>Create your account</p>
             </div>
 
             <div>
-              <span style={{color:"white"}}>2</span>
+              <span style={{ color: "white" }}>2</span>
               <h4>Connect</h4>
               <p>Post or apply for internships</p>
             </div>
 
             <div>
-              <span style={{color:"white"}}>3</span>
+              <span style={{ color: "white" }}>3</span>
               <h4>Collaborate</h4>
               <p>Work together on tasks</p>
             </div>
 
             <div>
-              <span style={{color:"white"}}>4</span>
+              <span style={{ color: "white" }}>4</span>
               <h4>Succeed</h4>
               <p>Complete and grow</p>
             </div>

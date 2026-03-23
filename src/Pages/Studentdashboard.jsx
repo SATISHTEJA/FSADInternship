@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "../Styles/Dashboard.css";
 import HeaderforStudent from "../Components/HeaderforStudent";
 import {
   LayoutDashboard,

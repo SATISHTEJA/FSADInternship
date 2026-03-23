@@ -1,10 +1,13 @@
 import React from "react";
 import { LogOut, GraduationCap } from "lucide-react";
 import "../Styles/Dashboard.css";
+import { useNavigate } from "react-router-dom";
 
 const HeaderforStudent = () => {
   const student =
     JSON.parse(localStorage.getItem("studentProfile")) || {};
+
+    const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem("studentProfile");
@@ -23,13 +26,13 @@ const HeaderforStudent = () => {
 
       <div className="dash-right">
         <div style={{ textAlign: "right" }}>
-          <strong style={{ color: "black" }}>{student.name || "Student"}</strong>
-          <div style={{ fontSize: "12px", color: "#6b7280" }}>
+          <a href="/student-profile" className="headerloname"><strong style={{ color: "black" }}>{student.name || "Student"}</strong></a>
+          <div onClick={() => navigate("/student-profile")} className="headerloname"style={{ fontSize: "12px", color: "#6b7280" }} >
             {student.email || "student@gmail.com"}
           </div>
 
         </div>
-        <div>
+        <div onClick={() => navigate("/student-profile")} style={{cursor:"pointer"}}>
           <img
             src={
               student.image ||

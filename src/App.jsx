@@ -1,41 +1,47 @@
-import React from 'react'
-import { Routes, Route } from 'react-router-dom'
+import React from "react";
+import { Routes, Route } from "react-router-dom";
 
-import Mainlayout from './Layouts/Mainlayout'
+import Mainlayout from "./Layouts/Mainlayout";
 
-import Home from './Pages/Home'
-import  Contact  from './Pages/Contact'
-import About from './Pages/About'
-import Login from './Pages/Login'
-import Register from './Pages/Register'
-import Forgetpass from './Pages/Forgetpass'
+import Home from "./Pages/Home";
+import Contact from "./Pages/Contact";
+import About from "./Pages/About";
+import Login from "./Pages/Login";
+import Register from "./Pages/Register";
+import Forgetpass from "./Pages/Forgetpass";
 
-import Admindashboard from './Pages/Admindashboard'
-import Postinternship from './Pages/Postinternship'
-import Applications from './Pages/Applications'
-import TrackProgress from './Pages/TrackProgress'
-import Evaluations from './Pages/Evaluations'
-import Adminprofile from './Pages/Adminprofile'
+import ProtectedRoute from "./Components/ProtectedRoute";
 
-import Studentdashboard from './Pages/Studentdashboard'
-import BrowseInternships from './Pages/BrowseInternships'
-import MyApplications from './Pages/MyApplications'
-import MyTasks from './Pages/MyTasks'
-import Feedback from './Pages/Feedback'
-import ApplyInternship from './Pages/ApplyInternship'
-import InternshipDetails from './Pages/InternshipDetails'
-import Studentprofile from './Pages/Studentprofile'
+// Admin
+import Admindashboard from "./Pages/Admindashboard";
+import Postinternship from "./Pages/Postinternship";
+import Applications from "./Pages/Applications";
+import TrackProgress from "./Pages/TrackProgress";
+import Evaluations from "./Pages/Evaluations";
+import Adminprofile from "./Pages/Adminprofile";
 
-import Management from './Cardpages/Management'
-import Pio from './Cardpages/Pio'
-import Profileinfo from './Cardpages/Profileinfo'
-import Mentor from './Cardpages/Mentor'
-import Progress from './Cardpages/Progress'
-import Tasks from './Cardpages/Tasks'
+// Student
+import Studentdashboard from "./Pages/Studentdashboard";
+import BrowseInternships from "./Pages/BrowseInternships";
+import MyApplications from "./Pages/MyApplications";
+import MyTasks from "./Pages/MyTasks";
+import Feedback from "./Pages/Feedback";
+import ApplyInternship from "./Pages/ApplyInternship";
+import InternshipDetails from "./Pages/InternshipDetails";
+import Studentprofile from "./Pages/Studentprofile";
+
+// Cards
+import Management from "./Cardpages/Management";
+import Pio from "./Cardpages/Pio";
+import Profileinfo from "./Cardpages/Profileinfo";
+import Mentor from "./Cardpages/Mentor";
+import Progress from "./Cardpages/Progress";
+import Tasks from "./Cardpages/Tasks";
 
 const App = () => {
   return (
     <Routes>
+
       {/* Layout Route */}
       <Route element={<Mainlayout />}>
         <Route path="/" element={<Home />} />
@@ -44,37 +50,136 @@ const App = () => {
       {/* Auth Routes */}
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path='/contact' element={<Contact/>}/>
-      <Route path='/about' element={<About/>}/>
+      <Route path="/contact" element={<Contact />} />
+      <Route path="/about" element={<About />} />
       <Route path="/Forgetpass" element={<Forgetpass />} />
 
-      {/* Admin Routes */}
-      <Route path="/admin-dashboard" element={<Admindashboard />} />
-      <Route path="/post-internship" element={<Postinternship />} />
-      <Route path="/applications" element={<Applications />} />
-      <Route path="/track-progress" element={<TrackProgress />} />
-      <Route path="/evaluations" element={<Evaluations />} />
-      <Route path="/admin-profile" element={<Adminprofile />} />
+      {/* ================= ADMIN PROTECTED ================= */}
+      <Route
+        path="/admin-dashboard"
+        element={
+          <ProtectedRoute allowedRole="admin">
+            <Admindashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/post-internship"
+        element={
+          <ProtectedRoute allowedRole="admin">
+            <Postinternship />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/applications"
+        element={
+          <ProtectedRoute allowedRole="admin">
+            <Applications />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/track-progress"
+        element={
+          <ProtectedRoute allowedRole="admin">
+            <TrackProgress />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/evaluations"
+        element={
+          <ProtectedRoute allowedRole="admin">
+            <Evaluations />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin-profile"
+        element={
+          <ProtectedRoute allowedRole="admin">
+            <Adminprofile />
+          </ProtectedRoute>
+        }
+      />
 
-      {/* Student Routes */}
-      <Route path="/student-dashboard" element={<Studentdashboard />} />
-      <Route path="/browse-internships" element={<BrowseInternships/>}/>
-      <Route path="/myapplications" element={<MyApplications/>}/>
-      <Route path="/feedback" element={<Feedback/>}/>
-      <Route path='/mytasks' element={<MyTasks/>}/>
-      <Route path="/apply/:id" element={<ApplyInternship/>}/>
-      <Route path="/internship/:id" element={<InternshipDetails/>}/>
-      <Route path="/student-profile" element={<Studentprofile />} />
+      {/* ================= STUDENT PROTECTED ================= */}
+      <Route
+        path="/student-dashboard"
+        element={
+          <ProtectedRoute allowedRole="student">
+            <Studentdashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/browse-internships"
+        element={
+          <ProtectedRoute allowedRole="student">
+            <BrowseInternships />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/myapplications"
+        element={
+          <ProtectedRoute allowedRole="student">
+            <MyApplications />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/feedback"
+        element={
+          <ProtectedRoute allowedRole="student">
+            <Feedback />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/mytasks"
+        element={
+          <ProtectedRoute allowedRole="student">
+            <MyTasks />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/apply/:id"
+        element={
+          <ProtectedRoute allowedRole="student">
+            <ApplyInternship />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/internship/:id"
+        element={
+          <ProtectedRoute allowedRole="student">
+            <InternshipDetails />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/student-profile"
+        element={
+          <ProtectedRoute allowedRole="student">
+            <Studentprofile />
+          </ProtectedRoute>
+        }
+      />
 
-      {/* Card Pages */}
+      {/* Card Pages (Optional - keep open or protect if needed) */}
       <Route path="/pio" element={<Pio />} />
       <Route path="/management" element={<Management />} />
       <Route path="/profileinfo" element={<Profileinfo />} />
       <Route path="/mentor" element={<Mentor />} />
       <Route path="/progress" element={<Progress />} />
       <Route path="/tasks" element={<Tasks />} />
-    </Routes>
-  )
-}
 
-export default App
+    </Routes>
+  );
+};
+
+export default App;

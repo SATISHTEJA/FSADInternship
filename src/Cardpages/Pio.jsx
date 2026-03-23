@@ -1,11 +1,17 @@
 import React from "react";
+import { useEffect } from "react";
+import PageNavigation from "../Cardpages/PageNavigation";
 import Cpheader from "./Cpheader";
 import Footer from "../Components/Footer";
 
 const Pio = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
       <Cpheader />
+      <PageNavigation current="/pio" />
 
       <div
         style={{

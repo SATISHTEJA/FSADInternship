@@ -4,9 +4,10 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import backreg from "../assets/backreg.png";
 import "../Styles/Loginstyling.css";
 import axios from "axios";
+import { strong } from "framer-motion/client";
 
 const Register = () => {
-  const [role, setRole] = useState("student");
+  const [role, setRole] = useState("Student");
   const [step, setStep] = useState(1);
 
   const [formData, setFormData] = useState({
@@ -75,8 +76,30 @@ const Register = () => {
   };
 
   useEffect(() => {
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+  const role = localStorage.getItem("role");
+
+  if (isLoggedIn) {
+    if (role === "student") {
+      navigate("/student-dashboard");
+    } else if (role === "admin") {
+      navigate("/admin-dashboard");
+    }
+  }
+}, []);
+
+  useEffect(() => {
     generateCaptcha();
   }, []);
+
+  useEffect(() => {
+    const isValid =
+      userCaptcha.trim() === captcha &&
+      formData.password === formData.confirmPassword &&
+      formData.password.trim() !== "";
+
+    setIsCaptchaValid(isValid);
+  }, [userCaptcha, captcha, formData.password, formData.confirmPassword]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -101,20 +124,26 @@ const Register = () => {
   };
 
   const handleRegister = async () => {
-    if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match!");
-      return;
-    }
+  if (formData.password !== formData.confirmPassword) {
+    alert("Passwords do not match!");
+    return;
+  }
 
-    if (!isCaptchaValid) {
-      alert("Invalid captcha!");
-      return;
-    }
-    if (role === "admin") {
-      navigate("/admin-dashboard", { state: { role: "admin" } });
-    } else {
-      navigate("/student-dashboard");
-    }
+  if (!isCaptchaValid) {
+    alert("Invalid captcha!");
+    return;
+  }
+
+  // 🔥 SAVE ROLE
+  localStorage.setItem("role", role.toLowerCase());
+  localStorage.setItem("isLoggedIn", "true");
+
+  if (role === "Admin") {
+    navigate("/admin-dashboard");
+  } else {
+    navigate("/student-dashboard");
+  }
+
 
     /*const dataToSend = {
       ...formData,
@@ -148,9 +177,9 @@ const Register = () => {
 
         <div className="role-switch">
           <button
-            className={role === "student" ? "active" : ""}
+            className={role === "Student" ? "active" : ""}
             onClick={() => {
-              setRole("student");
+              setRole("Student");
               resetForm();
             }}
           >
@@ -158,9 +187,9 @@ const Register = () => {
           </button>
 
           <button
-            className={role === "admin" ? "active" : ""}
+            className={role === "Admin" ? "active" : ""}
             onClick={() => {
-              setRole("admin");
+              setRole("Admin");
               resetForm();
             }}
           >
@@ -176,7 +205,7 @@ const Register = () => {
             <input name="name" value={formData.name} placeholder="Full Name" onChange={handleChange} />
             <div><input name="email" value={formData.email} type="email" placeholder="Email" onChange={handleChange} />
             </div>
-            {role === "admin" && (
+            {role === "Admin" && (
               <input name="phone" value={formData.phone} placeholder="Phone Number" onChange={handleChange} />
             )}
             <button onClick={nextStep} className="login-btn">Next</button>
@@ -190,7 +219,7 @@ const Register = () => {
         {/* STEP 2 */}
         {step === 2 && (
           <>
-            {role === "student" && (
+            {role === "Student" && (
               <>
                 <input name="stream" value={formData.stream} placeholder="Stream" onChange={handleChange} />
                 <input name="branch" value={formData.branch} placeholder="Branch" onChange={handleChange} />
@@ -229,7 +258,7 @@ const Register = () => {
 
             )}
 
-            {role === "admin" && (
+            {role === "Admin" && (
               <>
                 <input name="companyname" value={formData.companyname} placeholder="Company Name" onChange={handleChange} />
                 <input name="companyWebsite" value={formData.companyWebsite} placeholder="Company Website" onChange={handleChange} />
@@ -252,7 +281,7 @@ const Register = () => {
         {/* STEP 3 */}
         {step === 3 && (
           <>
-            {role === "admin" && (
+            {role === "Admin" && (
               <>
                 <input name="linkedin" value={formData.linkedin} placeholder="LinkedIn" onChange={handleChange} />
               </>
@@ -281,7 +310,16 @@ const Register = () => {
                 <div className="strength-bar">
                   <div className={`strength ${strength.toLowerCase()}`}></div>
                 </div>
-                <p>{strength}</p>
+                <p
+                  style={{
+                    color:
+                      strength === "Strong"
+                        ? "green"
+                        : strength === "Medium"
+                          ? "orange"
+                          : "red",
+                  }}
+                >{strength}</p>
               </>
             )}
 
@@ -304,19 +342,23 @@ const Register = () => {
                 onPaste={(e) => e.preventDefault()}
                 onCopy={(e) => e.preventDefault()}
                 onCut={(e) => e.preventDefault()}
-              />{formData.confirmPassword && (
+              />
+              <span onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="eye-icon">
+                {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+              </span>
+            </div>
+            <div>
+              {formData.confirmPassword && (
                 <p style={{
                   color: formData.password === formData.confirmPassword ? "green" : "red",
-                  fontWeight: "bold"
+                  marginTop: "5px"
                 }}>
                   {formData.password === formData.confirmPassword
                     ? "✔ Passwords match"
                     : "✖ Passwords do not match"}
                 </p>
               )}
-              <span onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="eye-icon">
-                {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
-              </span>
+
             </div>
 
             {passwordError && <p style={{ color: "red" }}>{passwordError}</p>}
@@ -331,15 +373,7 @@ const Register = () => {
             <input
               placeholder="Enter Captcha"
               value={userCaptcha}
-              onChange={(e) => {
-                const val = e.target.value;
-                setUserCaptcha(val);
-                if (val === captcha && formData.password === formData.confirmPassword) {
-                  setIsCaptchaValid(true);
-                } else {
-                  setIsCaptchaValid(false);
-                }
-              }}
+              onChange={(e) => setUserCaptcha(e.target.value)}
               onPaste={(e) => e.preventDefault()}
               onCopy={(e) => e.preventDefault()}
               onCut={(e) => e.preventDefault()}
@@ -347,7 +381,6 @@ const Register = () => {
             {userCaptcha && (
               <p style={{
                 color: userCaptcha === captcha ? "green" : "red",
-                fontWeight: "bold"
               }}>
                 {userCaptcha === captcha
                   ? "✔ Captcha correct"
