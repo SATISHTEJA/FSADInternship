@@ -61,14 +61,14 @@ const Login = () => {
         <div className="role-switch">
           <button
             className={role === "student" ? "active" : ""}
-            onClick={() => setRole("student")}
+            onClick={() => {setRole("student");setEmail("");setPassword("")}}
           >
             Student
           </button>
 
           <button
             className={role === "admin" ? "active" : ""}
-            onClick={() => setRole("admin")}
+            onClick={() => {setRole("admin");setEmail("");setPassword("")}}
           >
             Admin
           </button>
